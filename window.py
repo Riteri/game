@@ -3,6 +3,7 @@ from  tkinter import *
 from rejestracja import  Rejestracja
 from logowanie import  Logowanie
 from tkinter import ttk
+from dbslowa import  DbRand
 
 
 
@@ -12,7 +13,7 @@ from tkinter import ttk
 
 
 
-class StartWindow:   # начальное окно
+class StartWindow(DbRand):   # начальное окно
     def __init__(self, width, height, title = "Wisielca", resizable = (False, False) ):
         self.window1 = Tk()
         self.window1.title(title)
@@ -22,6 +23,9 @@ class StartWindow:   # начальное окно
         self.window1.lift()
         self.image()
         self.btn()
+
+        # self.dbrand()
+        # self.json()
 
 
 

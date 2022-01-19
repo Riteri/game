@@ -19,9 +19,27 @@ class Gra(DbRand):
         self.start_pos_man()
 
 
-        #новое слово и новая тема (идет функция по рандому темы и функция по выписыванию с рандомной темы букв  очищает предыдущее ))
-        ttk.Button(self.okienko_gry, text="\nnowe slowo\n",  command = lambda :[self.dbrand(),self.delete_text(), self.randThems(), self.start_pos_word()]).place(relx=0.1, rely=0.9)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #новое слово и новая тема (идет функция по рандому темы и функция по выписыванию с рандомной темы букв  очищает предыдущее ))
+        ttk.Button(self.okienko_gry, text="\nnowe slowo\n",  command = lambda :[self.dbrand() , self.delete_text(), self.randThems(),
+                                                                                self.start_pos_word()]).place(relx=0.1, rely=0.9)
+
+        # ttk.Button(self.okienko_gry, text="\nnowe slowo\n",
+        #            command=lambda: [self.json(), self.delete_text(), self.randThems(), self.start_pos_word()]).place(
+        #     relx=0.1, rely=0.9)
 
     def line(self):
         y = 0
@@ -41,25 +59,20 @@ class Gra(DbRand):
 
 
     def alphabet_start(self):
-
+        global buttons
         self.shift_x = self.shift_y = 0
         self.count = 0
 
+        buttons = []
+
+
         for c in range(ord("A"), ord("Z")+1):
-            self.btn_alphabet = Button(self.okienko_gry, text = chr(c),  width=2, height=1, fg = 'black', bg = 'silver')\
-                                .place( x =600+ self.shift_x, y = 400 - self.shift_y )
+            self.btn_alphabet = Button(self.okienko_gry, text = chr(c),  width=2, height=1, fg = 'black', bg = 'silver')
 
 
-            print (type(self.btn_alphabet))
 
-
-            # self.btn_alphabet.bind('<Button-1>', lambda event : self.check_btn(event))
-
-
-            # btn_alpha = []
-            # btn_alpha.append(self.btn_alphabet)
-            #
-            # print(btn_alpha)
+            self.btn_alphabet.place( x =600+ self.shift_x, y = 400 - self.shift_y )
+            self.btn_alphabet.bind('<Button-1>', lambda event: self.check_btn(event))
 
 
             self.shift_x +=40
@@ -69,17 +82,32 @@ class Gra(DbRand):
                 self.shift_x = self.count = 0
                 self.shift_y -=50
 
+            buttons.append(self.btn_alphabet)
+            # buttons.append(self.btn_alphabet.cget('text'))
+
+
+
+
+
+
+
+
+
+
 
 
     def test(self):
-        print('click')
+        self.textbtn = self.btn_alphabet.cget('text')
+        print(self.textbtn)
+
+
 
 
 
     def randThems(self):
 
         self.canvas.create_text(200, 30, text='temat słowa: '+self.random_thems, fill="black", font="Courier 18", tag = 'rand_temat')
-        # self.canvas.create_text(200, 70, text = 'slowo: ' + str(self.slowojoin),  fill="black", font=("Helvetica", "18"))
+
 
     def delete_text(self):
         self.canvas.delete('rand_temat')
@@ -87,29 +115,40 @@ class Gra(DbRand):
 
 
 
+
+
+
     #self.randomslowa это рандомное слово
     #рисует черточки вместо слова
     def start_pos_word(self):
-        global  label_under
+        global  label_word, label_under
+        label_word = []
         self.shift = 0
+
+
 
 
         for i in range(len(self.slowojoin)):
 
-            self.text_czertoczki = self.canvas.create_text((500 + self.shift, 50 ), text='_', font = 'Arial 14',fill="purple", tag = 'word')
+            # self.text_czertoczki = self.canvas.create_text((500 + self.shift, 50 ), text='_', font = 'Arial 14',fill="purple", tag = 'word')
 
 
-            # label_under =  Label(self.canvas, text = '_', font = 'Arial 14', bg = 'silver', fg = 'purple' ).place(x = 500+ self.shift, y = 50)
+            label_under =  Label(self.canvas, text = '_', font = 'Arial 14', fg = 'purple')
+            label_under.place(x = 500+ self.shift, y = 50)
             self.shift +=30
 
-            self.label_word = []
-            self.label_word.append(self.text_czertoczki)
+            label_word.append(label_under)
+            # label_word.append(self.text_czertoczki)
+
+            """ 
+            сделать еще удаление по нажатию кнопки
+            пока что работает только с перезаходом 
+            """
 
 
 
     def check_btn(self, event):
 
-        self.event = event
 
         check = event.widget['text']
         pos = []
@@ -120,7 +159,7 @@ class Gra(DbRand):
 
         if len(pos) != 0:
             for i in pos:
-                self.label_word[i].config(text = '{}'.format(self.slowojoin[i]))
+                label_word[i].config(text = '{}'.format(self.slowojoin[i]))
 
 
 
