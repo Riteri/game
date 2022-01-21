@@ -14,6 +14,35 @@ from threading import Timer
 class Gra(DbRand):
 
     def __init__(self, parent, title="Wisielca", resizable=(False, False) ):
+        """ Function - __init__
+
+        description
+        -----------
+        .lift()
+            gives an advantage in the location of windows
+        .iconbitmap
+            adds an icon to the application
+        .title()
+            sets the title of the window
+
+
+        Used libraries
+        --------------
+        from tkinter import *
+        from dbslowa import DbRand
+        from tkinter import  ttk
+        import os
+        import psycopg2 as ps
+        import threading
+        import schedule
+        import time
+        from threading import Timer
+
+
+        :param parent:
+        :param title: Gra
+        :param resizable: (False, False)
+        """
         #тут сделал по другому, потому что я дурак делал раньше сложнее((
         self.okienko_gry = Toplevel(parent)
 
@@ -55,17 +84,34 @@ class Gra(DbRand):
 
 
 
+
+
         # ttk.Button(self.okienko_gry, text = 'usunąć label', command = self.delete_label).place(relx = 0.1, rely = 0.8)
 
         # ttk.Button(self.okienko_gry, text="\nnowe slowo\n",
         #            command=lambda: [self.json(), self.delete_text(), self.randThems(), self.start_pos_word()]).place(
         #     relx=0.1, rely=0.9)
 
-    def quit(self):
-        self.okienko_gry.destroy()
+
 
 
     def line(self):
+        """Function - line
+
+        Parameters
+        ----------
+        y: int
+        x: int
+
+        description
+        -----------
+        draws lines creating a notebook effect
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
         y = 0
         while y < 680:
             x = 0
@@ -76,6 +122,18 @@ class Gra(DbRand):
 
 
     def start_pos_man(self):
+        """ Function start_pos_man
+
+        description
+        -----------
+        draws the gallows
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
+
         self.lin1 = self.canvas.create_line(100, 400, 100, 100, width = 4  ) #cлева 1
         self.lin2 = self.canvas.create_line(100, 100, 900 //3, 100, width = 4) # сверху верхняя
         self.lin3 = self.canvas.create_line(900//3, 100, 900//3, 150, width =4) #сбоку
@@ -87,6 +145,25 @@ class Gra(DbRand):
 
 
     def alphabet_start(self):
+        """ Function alphabet_start
+
+        Parameters
+        ----------
+        self.shift_x: int
+        self.count: int
+        buttons: list
+
+        description
+        -----------
+        places buttons with letters of the alphabet
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
+
+
         global buttons
         self.shift_x = self.shift_y = 0
         self.count = 0
@@ -119,11 +196,33 @@ class Gra(DbRand):
 
 
     def randThems(self):
+        """Function -  randThems
+
+        description
+        -----------
+        displays the topic of the word
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
 
         self.canvas.create_text(200, 30, text='temat słowa: '+self.random_thems, fill="black", font=("Futura PT Heave ", 18), tag = 'rand_temat')
 
 
     def delete_text(self):
+        """Function -  delete_text
+
+        description
+        -----------
+        clears the field after the end of the game
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
         self.canvas.delete('rand_temat')
         self.canvas.delete('winner')
         self.canvas.delete('loser')
@@ -137,18 +236,25 @@ class Gra(DbRand):
 
 
 
-
-
-    # def delete_label(self):
-    #     testperemennaja = 0
-    #     self.start_pos_word()
-
-
-
-
-    #self.randomslowa это рандомное слово
-    #рисует черточки вместо слова
     def start_pos_word(self):
+        """ Function - start_pos_word
+
+        Parameters
+        ----------
+        label_word: list
+        label_under: Label
+        self.shift: int
+
+        description
+        -----------
+        draws word length underscores
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
+
         global  label_word, label_under
         label_word = []
         self.shift = 0
@@ -166,14 +272,26 @@ class Gra(DbRand):
 
             label_word.append(label_under)
 
-            # label_word.append(self.text_czertoczki)
-
-
-
-
 
     # выводит на экран сколько у нас осталось жизни
     def lifes(self):
+        """Function lifes
+
+        Parameters
+        ----------
+        lifes: int
+
+        description
+        -----------
+        displays the number of lives
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
+
+
         global lifes_label, lifes
         lifes = 5
 
@@ -185,6 +303,25 @@ class Gra(DbRand):
 
 
     def timerStart(self):
+        """ Function -  timerStart
+
+        Parameters
+        ----------
+        t1:Timer
+        t2:Timer
+        t3:Timer
+        t4:Timer
+        t5:Timer
+
+        description
+        -----------
+        timer starts counting down
+
+        Used libraries
+        --------------
+        from threading import Timer
+
+        """
         t1.start()
         t2.start()
         t3.start()
@@ -193,6 +330,26 @@ class Gra(DbRand):
 
 
     def timerStop(self):
+        """ Function -  timerStop
+
+        Parameters
+        ----------
+        t1:Timer
+        t2:Timer
+        t3:Timer
+        t4:Timer
+        t5:Timer
+
+        description
+        -----------
+        ends the countdown timer
+
+        Used libraries
+        --------------
+        from threading import Timer
+
+        """
+
         t1.cancel()
         t2.cancel()
         t3.cancel()
@@ -201,6 +358,28 @@ class Gra(DbRand):
 
 
     def test(self):
+        """ Function -  test
+
+        Parameters
+        ----------
+        t1:Timer
+        t2:Timer
+        t3:Timer
+        t4:Timer
+        t5:Timer
+        t6:Timer
+
+        description
+        -----------
+        sets the timer
+
+        Used libraries
+        --------------
+        from threading import Timer
+
+
+        """
+
 
         global  t1,t2,t3,t4,t5 , t6
         t1 = threading.Timer(30.0, self.testbtnclick)
@@ -214,6 +393,24 @@ class Gra(DbRand):
 
     # костыли xd но работает , тут я сделал просто функцию
     def testbtnclick(self):
+        """ Function - testbtnclick
+
+        parameter
+        ---------
+        check: str
+        pos: list
+        licz_lifes: int
+        life: int
+
+        description
+        -----------
+        checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
+
+
+
+        """
+
+
         global  life
 
         check = '/'
@@ -251,6 +448,25 @@ class Gra(DbRand):
 
 
     def check_btn(self, event):
+        """Function - check_btn
+
+
+        parameter
+        ---------
+        check: str
+        pos: list
+        licz_lifes: int
+        life: int
+
+        description
+        -----------
+        checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
+
+
+        :param event:
+        :return:
+        """
+
         global  life
 
         check = event.widget['text']
@@ -289,6 +505,19 @@ class Gra(DbRand):
 
 
     def gameOverr(self, status):
+        """ Function - game overr
+
+        description
+        -----------
+        in case of victory and defeat, it displays the corresponding inscription on the screen,
+        also adds or subtracts points and calls the function for recording points in the table
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        :param status: str
+        """
 
         global  punkty
 
@@ -311,11 +540,27 @@ class Gra(DbRand):
 
             self.newPunkty()
 
-            # print(punkty)
 
 
 
     def draw(self, life):
+        """ Function - draw
+
+        Parameters
+        -----------
+        life : int
+
+        description
+        -----------
+        checks the number of lives and draws lines according to their number
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        :param life: int
+        :return:
+        """
 
 
 
@@ -337,6 +582,20 @@ class Gra(DbRand):
 
 
     def readtxt(self):
+        """ Function -  readtxt
+
+        Parameters
+        -----------
+        f: File
+        nick_is_points: str
+
+        description
+        -----------
+        reads txt file and gets values from there
+        after reading it immediately deletes it
+
+        """
+
         global nick_is_points
 
         f = open('points.txt', 'r')
@@ -351,7 +610,22 @@ class Gra(DbRand):
 
     # тут обращаюсь к 2м базам и достаю из них данные, с базы points достаю ник и очки
     def dbpoints(self):
-        global  all_points_nick, points_for_nick, points_new, sciezka_do_avataru
+        """ Function dbpoints
+
+        Parameters
+        ----------
+        points_for_nick: tuple
+        points_new: tuple
+
+
+        Used libraries
+        --------------
+        import psycopg2 as ps
+
+        :return: tuple
+        """
+
+        global  points_for_nick, points_new
 
         # сделали обращение к базе points
         conn = ps.connect("host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
@@ -359,24 +633,11 @@ class Gra(DbRand):
         poin = conn.cursor()
 
 
-        # nickname.execute(
-        #     "SELECT * FROM points WHERE nick = "+ "'"+  nick_is_points    +"'")
-        #
-        # all_points_nick = nickname.fetchall()
-        # print('надо ли ?' + str(all_points_nick))
-
-
-        # тут у нас очки  points_new
-
         poin.execute("SELECT points FROM points WHERE nick = "+ "'"+  nick_is_points    +"'")
 
         points_for_nick =  " ".join(map(''.join, poin.fetchall()))
 
         points_new = points_for_nick
-
-        # print(points_new)
-
-
 
         conn.commit()
         nickname.close()
@@ -388,6 +649,23 @@ class Gra(DbRand):
 
 
     def nickIPointsIavatar(self):
+
+        """ Function - nickIPointsIavatar
+
+        Parameters
+        ----------
+          self.labelNickGame: Label
+          self.labelPoints: label
+
+        Description
+        -----------
+        displays nickname and number of points
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
 
         self.labelNickGame = Label(self.okienko_gry, text = 'nick: ' + nick_is_points, font = ('Futura PT Heave ',20 ) )
         self.labelNickGame.place(relx = 0, rely = 0.95)
@@ -401,6 +679,21 @@ class Gra(DbRand):
 
     # загружает в таблицу наши пункты
     def newPunkty(self):
+        """ Function -  newPunkty
+
+        Parameters
+        ----------
+         points.execute: database
+
+         Description
+         -----------
+         uploads the received points to the database
+
+         Used libraries
+         --------------
+         import psycopg2 as ps
+
+        """
         conn = ps.connect("host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
         points = conn.cursor()
 
@@ -416,8 +709,7 @@ class Gra(DbRand):
 
 
 
-    def draw_rectangle(self):
-        self.rectangle = self.canvas.create_rectangle( 400, 45, 900, 80, fill = 'black'  )
+
 
 
 

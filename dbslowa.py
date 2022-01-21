@@ -10,8 +10,24 @@ import os
 class DbRand :
 
 
+
     #не работает
     def json(self):
+        """ Function json
+
+        Parameters
+        ----------
+        file: File.json
+        key:key
+
+        Description
+        -----------
+        writing words and topics in encrypted form to json file
+
+        """
+
+
+
         with open('slowa.json', 'rb') as f:
             codind_slowa = f.read()
 
@@ -53,6 +69,21 @@ class DbRand :
 
 
     def dbrand(self):
+        """ Function dbrand
+
+        Parameters
+        ----------
+        self.random_thems: list
+        self.randomslowa : tuple
+        self.slowa_json: json
+
+        Description
+        -----------
+        through random, a random topic is selected from the list, then the type is changed to string and a query is sent to the table
+        after, from the list, a random word is randomly selected, which the user will guess.
+        an encrypted json file is also created.
+
+        """
 
         try:
             self.conn = ps.connect("host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")

@@ -9,7 +9,31 @@ import os
 
 
 class Logowanie(Gra):
-    def __init__(self, parent, width, height, title="Wisielca", resizable=(False, False) ):
+    def __init__(self, parent, width, height, title="Logowanie", resizable=(False, False) ):
+        """ Function - __init__
+
+        Parameters
+        ----------
+        self.okno_logowania.iconbitmap: tkinter
+            adds an icon to the application
+
+        description
+        -----------
+        .lift()
+            gives an advantage in the location of windows
+        .iconbitmap
+            adds an icon to the application
+        .title()
+            sets the title of the window
+
+
+
+        :param parent:
+        :param width: 400
+        :param height: 300
+        :param title: Logowanie
+        :param resizable: (False, False)
+        """
 
         self.okno_logowania = Toplevel(parent)
         self.okno_logowania.title(title)
@@ -27,6 +51,27 @@ class Logowanie(Gra):
 
 
     def loguj(self):
+        """ Function - loguj
+
+        Parameters
+        ----------
+        self.haslo_logowanie_bd: StringVar()
+        nickname_logowanie_bd: StringVar()
+
+        self.hi_loguj: Label
+        self.nick_logowanie: ttk.Entry
+            place to enter a nickname
+
+        self.graj_i_zalogujsie: ttk.Button
+            login button (word for game is  database )
+        self.graj_i_zalogujsie_userhaslo: ttk.Button
+            login button(the word for the game is entered by the user)
+
+        Used libraries
+        -------------
+        tkinter import *
+        tkinter import ttk
+        """
 
         global nickname_logowanie_bd
 
@@ -40,16 +85,27 @@ class Logowanie(Gra):
         self.nick_logowanie = ttk.Entry(self.okno_logowania, width=30, justify=CENTER, textvariable = nickname_logowanie_bd).place(relx=0.3, rely=0.1)
         self.label_nick = Label(self.okno_logowania, text="Wpisz swój nick: ").place(relx=0.01, rely=0.1)
 
-        # self.haslo_logowanie = Entry(self.okno_logowania, width=30, justify=CENTER, insertofftime=300, show="*", textvariable = self.haslo_logowanie_bd) \
-        #     .place(relx=0.3, rely=0.2)
-        # self.label_haslo = Label(self.okno_logowania, text="Wpisz hasło: ").place(relx=0.01, rely=0.2)
-
         self.graj_i_zalogujsie = ttk.Button(self.okno_logowania, text="zalogować się\nhaslo od komputera", command  = self.sprawdz_i_graj).place(relx=0.33, rely=0.3)
         self.graj_i_zalogujsie_userhaslo = ttk.Button(self.okno_logowania, text = "zalogować się\nhaslo od uzytkownika", command  = self.userGame).place(relx = 0.33, rely= 0.5)
 
 
-    # тут мы получили наши очки и ник хранятся они в переменной self.pointsNickname
+
     def points(self):
+        """ Function points
+
+        Parameters
+        ----------
+        self.nickpoints: database
+
+        f: File
+
+        description
+        -----------
+            writes nickname and points to txt file
+
+        :return: tuple
+        """
+
         self.conn = ps.connect(
             "host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
 
@@ -71,8 +127,20 @@ class Logowanie(Gra):
 
 
     def sprawdz_i_graj(self):
+        """ Function - sprawdz_i_graj
 
+        Parameters
+        ----------
+        self.imie.execute: database
+        self.niknamelogowaniedb: tuple
 
+        description
+        -----------
+        checking if the entered nickname is in the database, if it matches,
+        a window with the game opens, if the user is not found, an error is displayed
+
+        :return: tuple, messagebox
+        """
 
         self.conn = ps.connect(
             "host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
@@ -99,11 +167,7 @@ class Logowanie(Gra):
             # os.system('python gra.py')
 
 
-
-
             Label(self.okno_logowania, text=self.niknamelogowaniedb, font="Courier 20").place(relx=0.01, rely=0.9)
-
-
 
 
         self.conn.close()
@@ -115,6 +179,22 @@ class Logowanie(Gra):
 
 
     def userGame(self):
+        """ Function - userGame
+
+        Parameters
+        ----------
+        self.imie.execute: database
+        self.niknamelogowaniedb: tuple
+
+        description
+        -----------
+        checking if the entered nickname is in the database, if it matches,
+        a window with the game opens, if the user is not found, an error is displayed
+
+
+        :return: tuple
+        """
+
 
         self.conn = ps.connect(
             "host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
