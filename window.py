@@ -3,17 +3,11 @@ from  tkinter import *
 from rejestracja import  Rejestracja
 from logowanie import  Logowanie
 from tkinter import ttk
-from dbslowa import  DbRand
+
+from gra import  Gra
 
 
-
-
-
-
-
-
-
-class StartWindow(DbRand):   # начальное окно
+class StartWindow(Gra):   # начальное окно
     def __init__(self, width, height, title = "Wisielca", resizable = (False, False) ):
         self.window1 = Tk()
         self.window1.title(title)
@@ -28,9 +22,6 @@ class StartWindow(DbRand):   # начальное окно
         # self.json()
 
 
-
-
-
         """
         кнопки
         """
@@ -41,6 +32,7 @@ class StartWindow(DbRand):   # начальное окно
 
         self.btn_rejestracja = ttk.Button(self.window1, text="rejestracja", command=self.okno_rejestracjiself).place(relx=0.45, rely=0.4)
         self.btn_logowanie = ttk.Button(self.window1, text="zaloguj się", command = self.okno_logowaniaself).place(relx=0.45, rely=0.5)
+        # self.btn_gra = ttk.Button(self.window1, text = 'graj', command  = self.okno_gryself).place(relx=0.45, rely = 0.3)
 
 
 

@@ -64,6 +64,18 @@ class Rejestracja :
             .place(relx = 0.45, rely = 0.6)
 
 
+    def dodawanie_niku_do_bazy_points(self):
+        self.com = ps.connect(
+            "host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
+        self.newNickPoints = self.com.cursor()
+
+        self.newNickPoints.execute("INSERT INTO points (nick, points) VALUES" + \
+                         "(" + "'" + self.nick.get() + "'" + "," + '0' + ")")
+
+        self.com.commit()
+        self.cur.close()
+        self.com.close()
+
 
     #Добавление аватарки
     def avatar(self):
@@ -94,7 +106,9 @@ class Rejestracja :
                              "'" + "," + "'" + self.plec.get() + "'" + "," + "'" + self.haslo.get() + "'" + "," + "'" + self.avatar + "'" + ")")
 
             messagebox.showinfo('Crete', 'użytkownik zostal stworzony!')
+            self.dodawanie_niku_do_bazy_points()
             self.okno_rejestracji.destroy()
+
 
 
             self.conn.commit()
@@ -103,30 +117,13 @@ class Rejestracja :
 
 
 
+
+
         else:
             messagebox.showwarning('wiselca', 'Ten nickname jest zajęty')
 
         self.sprawdzanieNik.close()
         self.conn.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

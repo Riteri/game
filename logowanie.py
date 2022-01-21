@@ -2,12 +2,14 @@ from tkinter import *
 from tkinter import ttk
 import psycopg2 as ps
 from tkinter import messagebox
-from gra import Gra
+
 from gameHasloOduser import UserGame
+from gra import  Gra
+import os
 
 
-class Logowanie:
-    def __init__(self, parent, width, height, title="Wisielca", resizable=(False, False), ):
+class Logowanie(Gra):
+    def __init__(self, parent, width, height, title="Wisielca", resizable=(False, False) ):
 
         self.okno_logowania = Toplevel(parent)
         self.okno_logowania.title(title)
@@ -17,6 +19,8 @@ class Logowanie:
         self.okno_logowania.lift()
         self.okno_logowania.iconbitmap('filesImages/icon.ico')
         self.loguj()
+
+
 
         # Button(self.okno_logowania, text = 'graj', command = self.okno_gryself, width=10, height=1).place(relx = 0.45, rely = 0.4)
 
@@ -43,6 +47,29 @@ class Logowanie:
         self.graj_i_zalogujsie = ttk.Button(self.okno_logowania, text="zalogować się\nhaslo od komputera", command  = self.sprawdz_i_graj).place(relx=0.33, rely=0.3)
         self.graj_i_zalogujsie_userhaslo = ttk.Button(self.okno_logowania, text = "zalogować się\nhaslo od uzytkownika", command  = self.userGame).place(relx = 0.33, rely= 0.5)
 
+
+    # тут мы получили наши очки и ник хранятся они в переменной self.pointsNickname
+    def points(self):
+        self.conn = ps.connect(
+            "host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
+
+        self.nickpoints = self.conn.cursor()
+
+        self.nickpoints.execute("SELECT *  FROM points WHERE nick = " + "'" + nickname_logowanie_bd.get() + "'")
+
+        self.pointsNickname  = self.nickpoints.fetchall()
+
+
+
+        self.nicknamepointsjoin = " ".join(map(''.join, self.niknamelogowaniedb))
+
+        #открываем файл и записываем туда ник и очки
+        f = open('points.txt', 'w')
+        f.write(str( self.nicknamepointsjoin))
+        f.close()
+
+
+
     def sprawdz_i_graj(self):
 
 
@@ -63,13 +90,20 @@ class Logowanie:
 
             messagebox.showwarning('wiselca', 'nie ma takiego użytkownika, sprobuj ponownie!')
         else:
-
+            self.points()
             messagebox.showinfo('wiselca', 'możesz zaczynać gre!')
-            #сделать лейбл на главном экране и отблокировать кнопку игры и в поле игры тоже добавить ник
+
+
             Gra(self.okno_logowania, title = 'Gra', resizable = (False,False))
-            # self.okno_logowania.destroy()
+
+            # os.system('python gra.py')
+
+
+
 
             Label(self.okno_logowania, text=self.niknamelogowaniedb, font="Courier 20").place(relx=0.01, rely=0.9)
+
+
 
 
         self.conn.close()
@@ -94,6 +128,7 @@ class Logowanie:
 
             messagebox.showwarning('wiselca', 'nie ma takiego użytkownika, sprobuj ponownie!')
         else:
+            self.points()
             messagebox.showinfo('wiselca', 'możesz zaczynać gre!')
             # сделать лейбл на главном экране и отблокировать кнопку игры и в поле игры тоже добавить ник
             UserGame(self.okno_logowania, title = 'Gra', resizable = (False,False))
@@ -102,6 +137,7 @@ class Logowanie:
 
         self.conn.close()
         self.imie.close()
+
 
 
 
