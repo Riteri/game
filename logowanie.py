@@ -3,7 +3,7 @@ from tkinter import ttk
 import psycopg2 as ps
 from tkinter import messagebox
 
-from gameHasloOduser import AllInGra
+from gameModAllIn import AllInGra
 from gra import  Gra
 
 

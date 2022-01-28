@@ -241,7 +241,6 @@ class AllInGra(DbRand):
 
     def deleteLabel(self):
         for i in range(len(self.slowojoin)):
-            # label_word[i].config(text = '')
             label_word[i].destroy()
 
     # выводит на экран сколько у нас осталось жизни

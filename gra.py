@@ -238,7 +238,6 @@ class Gra(DbRand):
 
     def deleteLabel(self):
         for i in range(len(self.slowojoin)):
-            # label_word[i].config(text = '')
             label_word[i].destroy()
 
 
