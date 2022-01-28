@@ -13,7 +13,7 @@ import psycopg2 as ps
 
 class AllInGra(DbRand):
 
-    def __init__(self, parent, title="Wisielca", resizable=(False, False) ):
+    def __init__(self, parent, title="Game mod allin", resizable=(False, False) ):
         """ Function - __init__
 
         description

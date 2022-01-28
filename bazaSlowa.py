@@ -10,7 +10,7 @@ cur.execute("INSERT INTO slowa_do_gry (Animals, Clothes,body_parts,kind_of_sport
 cur.execute("INSERT INTO slowa_do_gry (Animals, Clothes,body_parts,kind_of_sport) VALUES ('PARROT','HAT', 'NECK', 'CHESS')")
 cur.execute("INSERT INTO slowa_do_gry (Animals, Clothes,body_parts,kind_of_sport) VALUES ('SNAIL','SKIRT', 'BELLY', 'BASEBALL')")
 cur.execute("INSERT INTO slowa_do_gry (Animals, Clothes,body_parts,kind_of_sport) VALUES ('HAMSTER','SOCKS', 'shoulders', 'VOLLEYBALL')")
-cur.execute("INSERT INTO slowa_do_gry (Animals, Clothes,body_parts,kind_of_sport) VALUES ('LEOPARD','NECKTIE', 'Lips', 'HOCKEY')")
+cur.execute("INSERT INTO slowa_do_gry (Animals, Clothes,body_parts,kind_of_sport) VALUES ('LEOPARD','NECKTIE', 'LIPS', 'HOCKEY')")
 
 
 

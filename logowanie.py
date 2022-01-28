@@ -5,6 +5,7 @@ from tkinter import messagebox
 
 from gameModAllIn import AllInGra
 from gra import  Gra
+from remind import Remind
 
 
 
@@ -79,15 +80,30 @@ class Logowanie(Gra, AllInGra):
 
 
 
+
+
         self.hi_loguj = Label(self.okno_logowania, text = "Login window, log in and play").pack()
 
         self.nick_logowanie = ttk.Entry(self.okno_logowania, width=30, justify=CENTER, textvariable = nickname_logowanie_bd).place(relx=0.3, rely=0.1)
         self.label_nick = Label(self.okno_logowania, text="Enter your nickname: ").place(relx=0.01, rely=0.1)
 
+        self.haslo_logowanie = ttk.Entry(self.okno_logowania, width=30,justify=CENTER, textvariable= self.haslo_logowanie_bd, show ="*" ).place(relx= 0.3, rely = 0.2)
+        self.haslo_logowanie_Label = Label(self.okno_logowania, text = 'Enter your password: ').place(relx= 0.01, rely = 0.2)
+
+
+
         self.graj_i_zalogujsie = ttk.Button(self.okno_logowania, text="Game mode: normal", command  = self.sprawdz_i_graj,  width = 20)\
             .place(relx=0.33, rely=0.3)
         self.graj_i_zalogujsie_userhaslo = ttk.Button(self.okno_logowania, text = "Game mode: All-in", command  = self.userGame,  width = 20)\
             .place(relx = 0.33, rely= 0.45)
+
+
+        self.remind_password = ttk.Button(self.okno_logowania, text = 'Remind password', command = self.openWindowRemind)
+        self.remind_password.place(relx = 0.7, rely = 0.9)
+
+
+    def openWindowRemind(self):
+        Remind(self.okno_logowania, title='remind password', resizable=(False, False))
 
 
 
@@ -107,22 +123,22 @@ class Logowanie(Gra, AllInGra):
         :return: tuple
         """
 
-        self.conn = ps.connect(
-            "host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
-
-        self.nickpoints = self.conn.cursor()
-
-        self.nickpoints.execute("SELECT *  FROM points WHERE nick = " + "'" + nickname_logowanie_bd.get() + "'")
-
-        self.pointsNickname  = self.nickpoints.fetchall()
-
-
-
-        self.nicknamepointsjoin = " ".join(map(''.join, self.niknamelogowaniedb))
+        # self.conn = ps.connect(
+        #     "host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
+        #
+        # self.nickpoints = self.conn.cursor()
+        #
+        # self.nickpoints.execute("SELECT *  FROM points WHERE nick = " + "'" + nickname_logowanie_bd.get() + "'")
+        #
+        # self.pointsNickname  = self.nickpoints.fetchall()
+        #
+        #
+        #
+        # self.nicknamepointsjoin = " ".join(map(''.join, self.niknamelogowaniedb))
 
         #открываем файл и записываем туда ник и очки
         f = open('points.txt', 'w')
-        f.write(str( self.nicknamepointsjoin))
+        f.write(str( nickname_logowanie_bd.get()))
         f.close()
 
 
@@ -151,7 +167,8 @@ class Logowanie(Gra, AllInGra):
 
 
 
-        self.imie.execute("SELECT nick  FROM bdgraczy WHERE nick = " + "'" + nickname_logowanie_bd.get() + "'")
+        self.imie.execute("SELECT nick, haslo  FROM bdgraczy WHERE nick = " + "'" + nickname_logowanie_bd.get() + "'"+
+                    "and haslo= " + "'"+ self.haslo_logowanie_bd.get() + "'")
 
         self.niknamelogowaniedb = self.imie.fetchall()
 
@@ -199,7 +216,8 @@ class Logowanie(Gra, AllInGra):
         self.conn = ps.connect(
             "host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
         self.imie = self.conn.cursor()
-        self.imie.execute("SELECT nick  FROM bdgraczy WHERE nick = " + "'" + nickname_logowanie_bd.get() + "'")
+        self.imie.execute("SELECT nick, haslo  FROM bdgraczy WHERE nick = " + "'" + nickname_logowanie_bd.get() + "'"+
+                    "and haslo= " + "'"+ self.haslo_logowanie_bd.get() + "'")
 
         self.niknamelogowaniedb = self.imie.fetchall()
 
