@@ -47,7 +47,7 @@ class DbRand :
             f.write(decrypted_text)
 
         # через рандом мы с расшифрованного файла выписали слово и тему
-        self.random_json_thems = random.choice(['zwierzeta', 'ubrania', 'czesci_ciala', 'rodzaj_sportu'])
+        self.random_json_thems = random.choice(['Animals', 'Clothes', 'body_parts', 'kind_of_sport'])
         with open('tempFile.json', 'r') as f:
             data = json.loads(f.read())
             for i in data['slowa_i_tematy']:
@@ -99,7 +99,7 @@ class DbRand :
 
 
 
-            self.random_thems = random.choice(['zwierzeta', 'ubrania', 'czesci_ciala', 'rodzaj_sportu'])
+            self.random_thems = random.choice(['Animals', 'Clothes', 'body_parts', 'kind_of_sport'])
             # print(self.random_thems)
 
             self.rand.execute("SELECT "+ self.random_thems +" FROM slowa_do_gry")
@@ -119,19 +119,19 @@ class DbRand :
             # слова из таблицы
 
             # zwierzęta
-            self.slowa_zwierzeta.execute("SELECT zwierzeta FROM slowa_do_gry")
+            self.slowa_zwierzeta.execute("SELECT Animals FROM slowa_do_gry")
             self.slowa_zwierzeta_is_file_tuple = self.slowa_zwierzeta.fetchall()
 
             # ubrania
-            self.slowa_ubrania.execute("SELECT ubrania FROM slowa_do_gry")
+            self.slowa_ubrania.execute("SELECT Clothes FROM slowa_do_gry")
             self.slowa_ubrania_is_file_tuple = self.slowa_ubrania.fetchall()
 
             # części_ciała
-            self.slowa_czesci_ciala.execute("SELECT czesci_ciala from slowa_do_gry")
+            self.slowa_czesci_ciala.execute("SELECT body_parts from slowa_do_gry")
             self.slowa_czesci_ciala_is_file_tuple = self.slowa_czesci_ciala.fetchall()
 
             # rodzajSportu
-            self.slowa_rodzaj_sportu.execute("SELECT rodzaj_sportu from slowa_do_gry")
+            self.slowa_rodzaj_sportu.execute("SELECT kind_of_sport from slowa_do_gry")
             self.slowa_rodzaj_sportu_is_file_tuple = self.slowa_rodzaj_sportu.fetchall()
 
 
@@ -141,19 +141,19 @@ class DbRand :
             self.slowa_json = {
                 'slowa_i_tematy' : [
                     {
-                        'temat': 'zwierzeta',
+                        'temat': 'Animals',
                         'slowa': self.slowa_zwierzeta_is_file_tuple
                     },
                     {
-                        'temat': 'ubrania',
+                        'temat': 'Clothes',
                         'slowa':  self.slowa_ubrania_is_file_tuple
                     },
                     {
-                        'temat': 'rodzaj_sportu',
+                        'temat': 'body_parts',
                         'slowa': self.slowa_rodzaj_sportu_is_file_tuple
                     },
                     {
-                        'temat': 'czesci_ciala',
+                        'temat': 'kind_of_sport',
                         'slowa': self.slowa_czesci_ciala_is_file_tuple
                     }
 

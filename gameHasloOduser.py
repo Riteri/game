@@ -1,31 +1,58 @@
 #-*- coding: utf-8 -*-
 from tkinter import *
-from tkinter import  ttk
+from dbslowa import DbRand
+from tkinter import ttk, messagebox
 import os
 import psycopg2 as ps
-import threading
-import schedule
-import time
-from threading import Timer
+# import threading
+# import schedule
+# import time
+# from threading import Timer
 
 
 
-class UserGame:
+class AllInGra(DbRand):
 
     def __init__(self, parent, title="Wisielca", resizable=(False, False) ):
-        #тут сделал по другому, потому что я дурак делал раньше сложнее((
-        self.graUser = Toplevel(parent)
+        """ Function - __init__
 
-        self.graUser.title(title)
-        self.graUser.geometry('900x680')
-        self.canvas = Canvas(self.graUser,width = 900 , height = 600 )
+        description
+        -----------
+        .lift()
+            gives an advantage in the location of windows
+        .iconbitmap
+            adds an icon to the application
+        .title()
+            sets the title of the window
+
+
+        Used libraries
+        --------------
+        from tkinter import *
+        from dbslowa import DbRand
+        from tkinter import  ttk
+        import os
+        import psycopg2 as ps
+        import threading
+        import schedule
+        import time
+        from threading import Timer
+
+
+        :param parent:
+        :param title: Gra
+        :param resizable: (False, False)
+        """
+        self.okienko_gryAllIn = Toplevel(parent)
+
+        self.okienko_gryAllIn.title(title)
+        self.okienko_gryAllIn.geometry('900x630')
+        self.canvas = Canvas(self.okienko_gryAllIn,width = 900 , height = 630 )
         self.canvas.pack()
-        self.graUser.resizable(resizable[0], resizable[1])
-        self.graUser.wm_attributes("-topmost", 1)
-        self.graUser.iconbitmap('filesImages/icon.ico')
+        self.okienko_gryAllIn.resizable(resizable[0], resizable[1])
+        self.okienko_gryAllIn.lift()
+        self.okienko_gryAllIn.iconbitmap('filesImages/icon.ico')
 
-        # self.line()
-        # self.alphabet_start()
         self.start_pos_man()
 
         self.lifes()
@@ -34,31 +61,101 @@ class UserGame:
         self.dbpoints()
         self.nickIPointsIavatar()
 
-        self.haslo_i_temat()
+        self.textHi = self.canvas.create_text(600, 300, font =('Futura PT Heave', 17), text = 'Welcome to the gameplay mode all-in\n'\
+                                            'you can multiply your points\nor lose everything you have.\nPlay very carefully!',
+                                              fill = 'blue', tag = 'HiText')
 
-        Label(self.graUser, text = 'haslo muśi być wielkimi literami!', font = ('Futura PT Heave ',15 )).place(relx= 0.35, rely = 0)
 
 
 
-        #новое слово и новая тема (идет функция по рандому темы и функция по выписыванию с рандомной темы букв  очищает предыдущее ))
-        ttk.Button(self.graUser, text="\nnowe slowo\n",  command = lambda :[ self.saveInput(), self.delete_text(), self.randThems(),
-                                    self.start_pos_word(), self.lifes(), self.alphabet_start(), self.start_pos_man(),
-                                                                  self.dbpoints(), self.nickIPointsIavatar(), self.test()])\
-            .place(relx=0.1, rely=0.8)
+
+
+
+
+        self.topButton = ttk.Button(self.okienko_gryAllIn, text="\nnew word\n",  command = lambda :[ self.dbrand(), \
+                                    self.delete_text(), self.randThems(),\
+                                    self.start_pos_word(), self.lifes(), self.alphabet_start(), self.start_pos_man(),\
+                                    self.dbpoints(), self.nickIPointsIavatar(),  self.posTimer() , self.timerStart(), self.disablebtn() ])
+        self.topButton.place(relx=0.1, rely=0.8)
+
+
+    def disablebtn(self):
+        self.topButton['state'] = 'disabled'
+
+    def enabledBtn(self):
+        self.stopTimer =0
+        self.deleteLabel()
+        self.topButton['state'] = 'enabled'
+
+
+
+
+    def line(self):
+        """Function - line
+
+        Parameters
+        ----------
+        y: int
+        x: int
+
+        description
+        -----------
+        draws lines creating a notebook effect
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
+        y = 0
+        while y < 680:
+            x = 0
+            while x < 900:
+                self.canvas.create_rectangle(x, y, x + 33, y + 27, fill="white", outline="blue")
+                x = x + 33
+            y = y + 27
 
 
     def start_pos_man(self):
-        self.lin1 = self.canvas.create_line(100, 400, 100, 100, width = 4  ) #cлева 1
+        """ Function start_pos_man
+
+        description
+        -----------
+        draws the gallows
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
+
+        self.lin1 = self.canvas.create_line(100, 460, 100, 100, width = 4  ) #cлева 1
         self.lin2 = self.canvas.create_line(100, 100, 900 //3, 100, width = 4) # сверху верхняя
         self.lin3 = self.canvas.create_line(900//3, 100, 900//3, 150, width =4) #сбоку
-
-
-
-
+        self.lin4 = self.canvas.create_line(50,460, 300, 460, width=4)
 
 
 
     def alphabet_start(self):
+        """ Function alphabet_start
+
+        Parameters
+        ----------
+        self.shift_x: int
+        self.count: int
+        buttons: list
+
+        description
+        -----------
+        places buttons with letters of the alphabet
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
+
+
         global buttons
         self.shift_x = self.shift_y = 0
         self.count = 0
@@ -67,12 +164,13 @@ class UserGame:
 
 
         for c in range(ord("A"), ord("Z")+1):
-            self.btn_alphabet = Button(self.graUser, text = chr(c),  width=2, height=1, fg = 'black', bg = 'silver')
+            self.btn_alphabet = Button(self.okienko_gryAllIn, text = chr(c),  width=2, height=1, fg = 'black', bg = 'silver' )
 
 
 
             self.btn_alphabet.place( x =600+ self.shift_x, y = 400 - self.shift_y )
             self.btn_alphabet.bind('<Button-1>', lambda event: self.check_btn(event))
+
 
 
             self.shift_x +=40
@@ -91,90 +189,178 @@ class UserGame:
 
 
     def randThems(self):
+        """Function -  randThems
 
-        self.canvas.create_text(200, 75, text='temat słowa: '+self.tematUser, fill="black", font=("Futura PT Heave ", 18), tag = 'rand_temat')
+        description
+        -----------
+        displays the topic of the word
 
+        Used libraries
+        --------------
+        from tkinter import *
 
-    def delete_text(self):
-        self.canvas.delete('rand_temat')
-        self.canvas.delete('winner')
-        self.canvas.delete('loser')
-        self.canvas.delete('word')
-        self.canvas.delete('head')
-        self.canvas.delete('body')
-        self.canvas.delete('lhand')
-        self.canvas.delete('rhand')
-        self.canvas.delete('lfoot')
-        self.canvas.delete('rfoot')
+        """
+
+        self.canvas.create_text(200, 30, text='Word theme: '+self.random_thems, fill="black", font=("Futura PT Heave ", 18), tag = 'rand_temat')
 
 
 
 
 
-    #self.randomslowa это рандомное слово
-    #рисует черточки вместо слова
     def start_pos_word(self):
+        """ Function - start_pos_word
+
+        Parameters
+        ----------
+        label_word: list
+        label_under: Label
+        self.shift: int
+
+        description
+        -----------
+        draws word length underscores
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
+
         global  label_word, label_under
         label_word = []
         self.shift = 0
 
-        # testperemennaja = len(self.hasloUser)
-
-        # for i in range(len(self.hasloUser)):
-        for i in range(len(self.hasloUser)):
-
-            # label_undertext = self.canvas.create_text((500 + self.shift, 50 ), text='_', font = 'Arial 14',fill="purple", tag = 'word')
+        for i in range(len(self.slowojoin)):
 
             label_under =  Label(self.canvas, text = '_', font = 'Arial 14', fg = 'purple')
-            label_under.place(x = 500+ self.shift, y = 50)
+            label_under.place(x = 400+ self.shift, y = 50)
             self.shift +=30
 
             label_word.append(label_under)
 
-            # label_word.append(self.text_czertoczki)
+
+    def deleteLabel(self):
+        for i in range(len(self.slowojoin)):
+            # label_word[i].config(text = '')
+            label_word[i].destroy()
 
     # выводит на экран сколько у нас осталось жизни
     def lifes(self):
+        """Function lifes
+
+        Parameters
+        ----------
+        lifes: int
+
+        description
+        -----------
+        displays the number of lives
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
+
+
         global lifes_label, lifes
         lifes = 5
 
-        lifes_text = Label(self.graUser, text = 'życie ', font = ('Futura PT Heave ',20 ))
-        lifes_text.place(x = 800, y = 10)
+        lifes_text = Label(self.okienko_gryAllIn, text = 'życie: ', font = ('Futura PT Heave ',20 ))
+        lifes_text.place(x = 800,rely = 0.95)
 
-        lifes_label = Label(self.graUser, text = '{}'.format(lifes),font = ('Futura PT Heave ',20 ))
-        lifes_label.place(x = 870, y = 10)
-
-
+        lifes_label = Label(self.okienko_gryAllIn, text = '{}'.format(lifes),font = ('Futura PT Heave ',20 ))
+        lifes_label.place(x = 870, rely = 0.95)
 
 
 
 
 
-    def test(self):
+    def posTimer(self):
+        self.czas = 30
+        self.stopTimer = 5
+        self.labelTime = Label(self.okienko_gryAllIn, text = 'czas przed rysowaniem linii: {}'.format(self.czas),
+                               font = ('Futura PT Heave ',12 ), fg = 'purple')
+        self.labelTime.place(relx = 0.68, rely = 0.55)
 
-        threading.Timer(30.0, self.testbtnclick).start()
-        threading.Timer(60.0, self.testbtnclick).start()
-        threading.Timer(90.0, self.testbtnclick).start()
-        threading.Timer(120.0, self.testbtnclick).start()
-        threading.Timer(150.0, self.testbtnclick).start()
+
+
+    def timerStart(self):
+        """ Function timerStart
+
+        Parameters
+        ----------
+        self.czas: int
+        self.stopTimer: int
+        self.labelTime: Label
+
+        Used libraries
+        --------------
+        from tkinter import *
+        """
+        self.czas -=1
+
+        if self.czas !=0:
+
+            self.labelTime.config(text = 'czas przed rysowaniem linii: {}'.format(self.czas))
+            self.timerReload = self.okienko_gryAllIn.after(1000, self.timerStart)
+        if self.czas == 0:
+            # self.callBtn()
+            self.testbtnclick()
+            self.stopTimer -= 1
+
+            self.czas = 30
+            self.startTimer = self.okienko_gryAllIn.after(1000, self.timerStart)
+
+        if self.stopTimer == 0:
+            self.okienko_gryAllIn.after_cancel(self.timerReload)
+
+
+
+
+    # def callBtn(self):
+    #     if self.czas == 0:
+    #         self.testbtnclick()
+    #     else:
+    #         pass
+
+
 
 
     # костыли xd но работает , тут я сделал просто функцию
     def testbtnclick(self):
+        """ Function - testbtnclick
+
+        parameter
+        ---------
+        check: str
+        pos: list
+        licz_lifes: int
+        life: int
+
+        description
+        -----------
+        checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
+
+
+
+        """
+
+
         global  life
 
         check = '/'
         pos = []
 
-        for i in range(len(self.hasloUser)):
-            if self.hasloUser[i] == check:
+        for i in range(len(self.slowojoin)):
+            if self.slowojoin[i] == check:
                 pos.append(i)
 
-        # if len(pos) != 0:
+
         if pos:
             for i in pos:
-                # self.canvas.itemconfig(label_word[i], text = '{}'.format(self.hasloUser[i]))
-                label_word[i].config(text = '{}'.format(self.hasloUser[i]))
+                # self.canvas.itemconfig(label_word[i], text = '{}'.format(self.slowojoin[i]))
+                label_word[i].config(text = '{}'.format(self.slowojoin[i]))
 
             licz_lifes = 0
 
@@ -182,7 +368,7 @@ class UserGame:
                 if  i['text'].isalpha():
                     licz_lifes +=1
 
-            if licz_lifes == len(self.hasloUser):
+            if licz_lifes == len(self.slowojoin):
                 self.gameOverr('win')
 
         else:
@@ -198,20 +384,39 @@ class UserGame:
 
 
     def check_btn(self, event):
+        """Function - check_btn
+
+
+        parameter
+        ---------
+        check: str
+        pos: list
+        licz_lifes: int
+        life: int
+
+        description
+        -----------
+        checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
+
+
+        :param event:
+        :return:
+        """
+
         global  life
 
         check = event.widget['text']
         pos = []
 
-        for i in range(len(self.hasloUser)):
-            if self.hasloUser[i] == check:
+        for i in range(len(self.slowojoin)):
+            if self.slowojoin[i] == check:
                 pos.append(i)
 
-        # if len(pos) != 0:
+
         if pos:
             for i in pos:
-                # self.canvas.itemconfig(label_word[i], text = '{}'.format(self.hasloUser[i]))
-                label_word[i].config(text = '{}'.format(self.hasloUser[i]))
+                # self.canvas.itemconfig(label_word[i], text = '{}'.format(self.slowojoin[i]))
+                label_word[i].config(text = '{}'.format(self.slowojoin[i]))
 
             licz_lifes = 0
 
@@ -219,7 +424,7 @@ class UserGame:
                 if  i['text'].isalpha():
                     licz_lifes +=1
 
-            if licz_lifes == len(self.hasloUser):
+            if licz_lifes == len(self.slowojoin):
                 self.gameOverr('win')
 
         else:
@@ -236,6 +441,19 @@ class UserGame:
 
 
     def gameOverr(self, status):
+        """ Function - game overr
+
+        description
+        -----------
+        in case of victory and defeat, it displays the corresponding inscription on the screen,
+        also adds or subtracts points and calls the function for recording points in the table
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        :param status: str
+        """
 
         global  punkty
 
@@ -246,23 +464,41 @@ class UserGame:
             self.canvas.create_text(600, 300, font =('Futura PT Heave', 20), text = 'Gratuluję z wygraniem', fill = 'green', tag = 'winner')
 
 
-            punkty = len(self.hasloUser)*1+ int(points_new)
+            punkty = int(points_new) + abs(int(points_new)) +1
             self.newPunkty()
             print(punkty)
+            self.enabledBtn()
 
         else:
             self.canvas.create_text(600, 300, font=('Futura PT Heave', 20), text='Niestety przegrałeś, \n sprobuj ponownie ',
                                     fill='red', tag = 'loser')
 
-            punkty = len(self.hasloUser) * (-1)  + int(points_new)
+            punkty = int(points_new)  - abs(int(points_new)) -1
 
             self.newPunkty()
+            self.enabledBtn()
 
-            # print(punkty)
 
 
 
     def draw(self, life):
+        """ Function - draw
+
+        Parameters
+        -----------
+        life : int
+
+        description
+        -----------
+        checks the number of lives and draws lines according to their number
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        :param life: int
+        :return:
+        """
 
 
 
@@ -284,6 +520,20 @@ class UserGame:
 
 
     def readtxt(self):
+        """ Function -  readtxt
+
+        Parameters
+        -----------
+        f: File
+        nick_is_points: str
+
+        description
+        -----------
+        reads txt file and gets values from there
+        after reading it immediately deletes it
+
+        """
+
         global nick_is_points
 
         f = open('points.txt', 'r')
@@ -298,7 +548,22 @@ class UserGame:
 
     # тут обращаюсь к 2м базам и достаю из них данные, с базы points достаю ник и очки
     def dbpoints(self):
-        global  all_points_nick, points_for_nick, points_new, sciezka_do_avataru
+        """ Function dbpoints
+
+        Parameters
+        ----------
+        points_for_nick: tuple
+        points_new: tuple
+
+
+        Used libraries
+        --------------
+        import psycopg2 as ps
+
+        :return: tuple
+        """
+
+        global  points_for_nick, points_new
 
         # сделали обращение к базе points
         conn = ps.connect("host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
@@ -306,16 +571,12 @@ class UserGame:
         poin = conn.cursor()
 
 
-        # тут у нас очки  points_new
-
         poin.execute("SELECT points FROM points WHERE nick = "+ "'"+  nick_is_points    +"'")
 
         points_for_nick =  " ".join(map(''.join, poin.fetchall()))
 
+        #points_new - aktualna ilość punktów
         points_new = points_for_nick
-
-
-
 
         conn.commit()
         nickname.close()
@@ -328,18 +589,56 @@ class UserGame:
 
     def nickIPointsIavatar(self):
 
-        self.labelNickGame = Label(self.graUser, text = 'nick: ' + nick_is_points, font = ('Futura PT Heave ',20 ) )
+
+        """ Function - nickIPointsIavatar
+
+        Parameters
+        ----------
+          self.labelNickGame: Label
+          self.labelPoints: label
+
+        Description
+        -----------
+        displays nickname and number of points
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
+
+
+
+        self.labelNickGame = Label(self.okienko_gryAllIn, text = 'nick: ' + nick_is_points, font = ('Futura PT Heave ',20 ) )
         self.labelNickGame.place(relx = 0, rely = 0.95)
 
 
 
-        self.labelPoints = Label(self.graUser, text = 'points: ' + points_new ,  font  = ('Futura PT Heave ',20 ) ).place(relx = 0.4, rely =0.95)
+        self.labelPoints = Label(self.okienko_gryAllIn, text = 'points: '  ,  font  = ('Futura PT Heave ',20 ) ).place(relx = 0.4, rely =0.95)
+        self.labelPointsNumber = self.canvas.create_text(520, 619, font=('Futura PT Heave', 20), text= points_new, tag = 'points')
 
-
-
+        # self.pointsLabelNew = Label(self.okienko_gryAllIn, text = '{}'.format(points_new),  font  = ('Futura PT Heave ',20 ))
+        # self.pointsLabelNew.place(relx = 0.5, rely = 0.95)
+        #
+        # self.pointsLabelNew.config(text = '{}'.format(points_new))
 
     # загружает в таблицу наши пункты
     def newPunkty(self):
+        """ Function -  newPunkty
+
+        Parameters
+        ----------
+         points.execute: database
+
+         Description
+         -----------
+         uploads the received points to the database
+
+         Used libraries
+         --------------
+         import psycopg2 as ps
+
+        """
         conn = ps.connect("host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
         points = conn.cursor()
 
@@ -353,35 +652,32 @@ class UserGame:
         conn.close()
 
 
+    def delete_text(self):
+        """Function -  delete_text
+
+        description
+        -----------
+        clears the field after the end of the game
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
+        self.canvas.delete('rand_temat')
+        self.canvas.delete('winner')
+        self.canvas.delete('loser')
+        self.canvas.delete('word')
+        self.canvas.delete('head')
+        self.canvas.delete('body')
+        self.canvas.delete('lhand')
+        self.canvas.delete('rhand')
+        self.canvas.delete('lfoot')
+        self.canvas.delete('rfoot')
+        self.canvas.delete('HiText')
+        self.canvas.delete('points')
 
 
 
 
-    def haslo_i_temat(self):
-        self.hasloUserStringVar = StringVar()
-        self.tematUserStringVar = StringVar()
-
-        self.hasloUserLabelEntry = ttk.Entry(self.graUser, width=30, justify=CENTER, textvariable= self.hasloUserStringVar,  show ="*") \
-            .place(x =100, y = 0)
-        self.hasloUserLabel = ttk.Label(self.graUser, text="Wpisz haslo: ").place(x = 0, y = 0)
-
-
-        self.tematUserEntry = ttk.Entry(self.graUser, width=30, justify=CENTER,
-                                    textvariable=self.tematUserStringVar,  show ="*") \
-            .place(x = 100, y = 30)
-        self.tematUserLabel = ttk.Label(self.graUser, text="Wpisz temat: ").place(x = 0, y = 30)
-
-        ttk.Button(self.graUser, text = 'Grać',  command = lambda :[self.saveInput(), self.delete_text(), self.start_pos_word(), self.randThems()])\
-            .place(relx=0.05, rely=0.9)
-
-
-
-    def saveInput(self):
-
-
-        self.hasloUser = self.hasloUserStringVar.get()
-        self.tematUser = self.tematUserStringVar.get()
-
-        print(self.hasloUser)
-        print(self.tematUser)
 

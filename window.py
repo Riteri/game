@@ -1,13 +1,15 @@
+import webbrowser
 import winsound
 from  tkinter import *
 from rejestracja import  Rejestracja
 from logowanie import  Logowanie
 from tkinter import ttk
 
-from gra import  Gra
 
 
-class StartWindow(Gra):   # начальное окно
+
+
+class StartWindow():
     def __init__(self, width, height, title = "Wisielca", resizable = (False, False) ):
         """ function -  __init__ class StartWindow
 
@@ -32,16 +34,18 @@ class StartWindow(Gra):   # начальное окно
         self.window1.geometry(f"{width}x{height}+500+150") # отступ от краев экрана + размеры
         self.window1.resizable(resizable[0], resizable[1])
         self.window1.iconbitmap('filesImages/icon.ico')
-        self.window1.lift()
+        # self.window1.lift()
         self.image()
         self.btn()
 
-        # self.dbrand()
-        # self.json()
+        self.urlDonation = 'https://www.donationalerts.com/r/antondiditsky'
+        self.urlTikTok = 'https://www.tiktok.com/@riteri'
+        self.urlGitHub = 'https://github.com/Riteri'
 
 
 
-    def btn(self):  #кнопки
+
+    def btn(self):
         """Function - btn
 
         Parameters
@@ -65,8 +69,10 @@ class StartWindow(Gra):   # начальное окно
         tkinter import *
         """
 
-        self.btn_rejestracja = ttk.Button(self.window1, text="rejestracja", command=self.okno_rejestracjiself).place(relx=0.45, rely=0.4)
-        self.btn_logowanie = ttk.Button(self.window1, text="zaloguj się", command = self.okno_logowaniaself).place(relx=0.45, rely=0.5)
+        self.btn_rejestracja = ttk.Button(self.window1, text="Registration", command=self.okno_rejestracjiself , width = 15).place(relx=0.45, rely=0.4)
+        self.btn_logowanie = ttk.Button(self.window1, text="Authorization ", command = self.okno_logowaniaself , width = 15).place(relx=0.45, rely=0.5)
+
+
 
 
         self.btn_musicoff = PhotoImage(file="filesImages/musicoff.png")
@@ -79,7 +85,29 @@ class StartWindow(Gra):   # начальное окно
         self.volume_btn = Button(self.window1, image=self.btn_music, highlightthickness=0, bd=0, command= lambda :[self.play_music()]) \
             .place(relx=0, rely=0.85)
 
+        self.btnTikTok = PhotoImage(file= "filesImages/Tik-Tok.png")
+        self.btnTikTok = self.btnTikTok.subsample(13,13)
+        self.btnTikTokBtn = Button(self.window1, image= self.btnTikTok,command= self.tokTok ).place(relx = 0.55, y =452)
 
+
+        self.donationBtn = PhotoImage(file = 'filesImages/donationalerts.png')
+        self.donationBtn = self.donationBtn.subsample(6,6)
+        self.donationalertsBtn = Button(self.window1, image= self.donationBtn, command=self.donation).place(relx = 0.4, rely=0.89)
+
+
+        self.gitHubBtn = PhotoImage(file = 'filesImages/githubImage.png')
+        self.gitHubBtn = self.gitHubBtn.subsample(11,11)
+        self.GitBtn = Button(self.window1, image= self.gitHubBtn, command=self.github).place(relx = 0.7, y = 450)
+
+
+    def donation(self):
+        webbrowser.open_new(self.urlDonation)
+
+    def tokTok(self):
+        webbrowser.open_new(self.urlTikTok)
+
+    def github(self):
+        webbrowser.open_new(self.urlGitHub)
 
     def stop_sound(self):
         """function - stop_sound
@@ -140,7 +168,7 @@ class StartWindow(Gra):   # начальное окно
         self.window1.mainloop()
 
 
-    def okno_rejestracjiself(self,  width = 500, height=400, title = "Okno rejestracji" , resizable = (False, False)):
+    def okno_rejestracjiself(self,  width = 500, height=400, title = "Registration window" , resizable = (False, False)):
         """ function -  okno_rejestracjiself
 
 
@@ -156,7 +184,7 @@ class StartWindow(Gra):   # начальное окно
         """
         Rejestracja(self.window1, width, height, title ,resizable )
 
-    def okno_logowaniaself(self , width = 400, height=300, title = "Logowanie" , resizable = (False, False)):
+    def okno_logowaniaself(self , width = 400, height=300, title = "Authorization window" , resizable = (False, False)):
         """function okno_logowaniaself
 
             description
@@ -170,6 +198,7 @@ class StartWindow(Gra):   # начальное окно
         :return:
         """
         Logowanie(self.window1, width, height, title ,resizable )
+
 
 
 
@@ -194,7 +223,7 @@ class StartWindow(Gra):   # начальное окно
 
 
 if __name__ == "__main__":
-    startWindow= StartWindow(512,512)  # размер окна
+    startWindow= StartWindow(512,512)
     startWindow.run()
 
 

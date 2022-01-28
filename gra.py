@@ -1,13 +1,13 @@
 #-*- coding: utf-8 -*-
 from tkinter import *
 from dbslowa import DbRand
-from tkinter import  ttk
+from tkinter import ttk, messagebox
 import os
 import psycopg2 as ps
-import threading
-import schedule
-import time
-from threading import Timer
+# import threading
+# import schedule
+# import time
+# from threading import Timer
 
 
 
@@ -43,54 +43,43 @@ class Gra(DbRand):
         :param title: Gra
         :param resizable: (False, False)
         """
-        #тут сделал по другому, потому что я дурак делал раньше сложнее((
         self.okienko_gry = Toplevel(parent)
 
         self.okienko_gry.title(title)
         self.okienko_gry.geometry('900x630')
-        self.canvas = Canvas(self.okienko_gry,width = 900 , height = 600 )
+        self.canvas = Canvas(self.okienko_gry,width = 900 , height = 630 )
         self.canvas.pack()
         self.okienko_gry.resizable(resizable[0], resizable[1])
-        self.okienko_gry.wm_attributes("-topmost", 1)
+        self.okienko_gry.lift()
         self.okienko_gry.iconbitmap('filesImages/icon.ico')
 
-        self.line()
-        # self.alphabet_start()
         self.start_pos_man()
-
         self.lifes()
-
         self.readtxt()
         self.dbpoints()
         self.nickIPointsIavatar()
 
 
-        # self.dbrand()
-        # self.start_pos_word()
-
-        # self.test_btn()
 
 
-
-
-
-
-
-        #новое слово и новая тема (идет функция по рандому темы и функция по выписыванию с рандомной темы букв  очищает предыдущее ))
-        ttk.Button(self.okienko_gry, text="\nnowe slowo\n",  command = lambda :[ self.dbrand(), self.delete_text(), self.randThems(),
-                                    self.start_pos_word(), self.lifes(), self.alphabet_start(), self.start_pos_man(),
-                                                                  self.dbpoints(), self.nickIPointsIavatar(), self.test(), self.timerStart() ])\
-            .place(relx=0.1, rely=0.8)
+        self.topButton = ttk.Button(self.okienko_gry, text="\nnew word\n",  command = lambda :[ self.dbrand(),\
+                                    self.delete_text(), self.randThems(),\
+                                    self.start_pos_word(), self.lifes(), self.alphabet_start(),\
+                                    self.dbpoints(), self.nickIPointsIavatar(),self.posTimer() , self.timerStart(), self.disablebtn() ])
+        self.topButton.place(relx=0.1, rely=0.8)
 
 
 
 
+    def disablebtn(self):
+        self.topButton['state'] = 'disabled'
 
-        # ttk.Button(self.okienko_gry, text = 'usunąć label', command = self.delete_label).place(relx = 0.1, rely = 0.8)
+    def enabledBtn(self):
+        self.stopTimer =0
 
-        # ttk.Button(self.okienko_gry, text="\nnowe slowo\n",
-        #            command=lambda: [self.json(), self.delete_text(), self.randThems(), self.start_pos_word()]).place(
-        #     relx=0.1, rely=0.9)
+        self.deleteLabel()
+
+        self.topButton['state'] = 'enabled'
 
 
 
@@ -133,11 +122,10 @@ class Gra(DbRand):
         from tkinter import *
 
         """
-
-        self.lin1 = self.canvas.create_line(100, 400, 100, 100, width = 4  ) #cлева 1
+        self.lin1 = self.canvas.create_line(100, 460, 100, 100, width = 4  ) #cлева 1
         self.lin2 = self.canvas.create_line(100, 100, 900 //3, 100, width = 4) # сверху верхняя
         self.lin3 = self.canvas.create_line(900//3, 100, 900//3, 150, width =4) #сбоку
-
+        self.lin4 = self.canvas.create_line(50,460, 300, 460, width=4)
 
 
 
@@ -208,31 +196,9 @@ class Gra(DbRand):
 
         """
 
-        self.canvas.create_text(200, 30, text='temat słowa: '+self.random_thems, fill="black", font=("Futura PT Heave ", 18), tag = 'rand_temat')
+        self.canvas.create_text(200, 30, text='Word theme: '+self.random_thems, fill="black", font=("Futura PT Heave ", 18), tag = 'rand_temat')
 
 
-    def delete_text(self):
-        """Function -  delete_text
-
-        description
-        -----------
-        clears the field after the end of the game
-
-        Used libraries
-        --------------
-        from tkinter import *
-
-        """
-        self.canvas.delete('rand_temat')
-        self.canvas.delete('winner')
-        self.canvas.delete('loser')
-        self.canvas.delete('word')
-        self.canvas.delete('head')
-        self.canvas.delete('body')
-        self.canvas.delete('lhand')
-        self.canvas.delete('rhand')
-        self.canvas.delete('lfoot')
-        self.canvas.delete('rfoot')
 
 
 
@@ -257,20 +223,23 @@ class Gra(DbRand):
 
         global  label_word, label_under
         label_word = []
+        label_test_list = []
         self.shift = 0
 
-        # testperemennaja = len(self.slowojoin)
 
-        # for i in range(len(self.slowojoin)):
         for i in range(len(self.slowojoin)):
-
-            # label_undertext = self.canvas.create_text((500 + self.shift, 50 ), text='_', font = 'Arial 14',fill="purple", tag = 'word')
-
             label_under =  Label(self.canvas, text = '_', font = 'Arial 14', fg = 'purple')
             label_under.place(x = 400+ self.shift, y = 50)
             self.shift +=30
 
             label_word.append(label_under)
+
+
+
+    def deleteLabel(self):
+        for i in range(len(self.slowojoin)):
+            # label_word[i].config(text = '')
+            label_word[i].destroy()
 
 
     # выводит на экран сколько у нас осталось жизни
@@ -295,99 +264,63 @@ class Gra(DbRand):
         global lifes_label, lifes
         lifes = 5
 
-        lifes_text = Label(self.okienko_gry, text = 'życie: ', font = ('Futura PT Heave ',20 ))
+        lifes_text = Label(self.okienko_gry, text = 'lifes: ', font = ('Futura PT Heave ',20 ))
         lifes_text.place(x = 800,rely = 0.95)
 
         lifes_label = Label(self.okienko_gry, text = '{}'.format(lifes),font = ('Futura PT Heave ',20 ))
         lifes_label.place(x = 870, rely = 0.95)
 
 
+    def posTimer(self):
+        self.czas = 30
+        self.stopTimer = 5
+        self.labelTime = Label(self.okienko_gry, text = 'czas przed rysowaniem linii: {}'.format(self.czas),
+                               font = ('Futura PT Heave ',12 ), fg = 'purple')
+        self.labelTime.place(relx = 0.68, rely = 0.55)
+
+
+
     def timerStart(self):
-        """ Function -  timerStart
+        """ Function timerStart
 
         Parameters
         ----------
-        t1:Timer
-        t2:Timer
-        t3:Timer
-        t4:Timer
-        t5:Timer
-
-        description
-        -----------
-        timer starts counting down
+        self.czas: int
+        self.stopTimer: int
+        self.labelTime: Label
 
         Used libraries
         --------------
-        from threading import Timer
-
-        """
-        t1.start()
-        t2.start()
-        t3.start()
-        t4.start()
-        t5.start()
-
-
-    def timerStop(self):
-        """ Function -  timerStop
-
-        Parameters
-        ----------
-        t1:Timer
-        t2:Timer
-        t3:Timer
-        t4:Timer
-        t5:Timer
-
-        description
-        -----------
-        ends the countdown timer
-
-        Used libraries
-        --------------
-        from threading import Timer
-
-        """
-
-        t1.cancel()
-        t2.cancel()
-        t3.cancel()
-        t4.cancel()
-        t5.cancel()
-
-
-    def test(self):
-        """ Function -  test
-
-        Parameters
-        ----------
-        t1:Timer
-        t2:Timer
-        t3:Timer
-        t4:Timer
-        t5:Timer
-        t6:Timer
-
-        description
-        -----------
-        sets the timer
-
-        Used libraries
-        --------------
-        from threading import Timer
-
-
+        from tkinter import *
         """
 
 
-        global  t1,t2,t3,t4,t5 , t6
-        t1 = threading.Timer(30.0, self.testbtnclick)
-        t2=threading.Timer(60.0, self.testbtnclick)
-        t3=threading.Timer(90.0, self.testbtnclick)
-        t4=threading.Timer(120.0, self.testbtnclick)
-        t5=threading.Timer(150.0, self.testbtnclick)
-        t6 = threading.Timer(150.0, self.timerStop)
+        self.czas -=1
+
+        if self.czas !=0:
+
+            self.labelTime.config(text = 'czas przed rysowaniem linii: {}'.format(self.czas))
+            self.timerReload = self.okienko_gry.after(1000, self.timerStart)
+        if self.czas == 0:
+            # self.callBtn()
+            self.testbtnclick()
+            self.stopTimer -= 1
+
+            self.czas = 30
+            self.startTimer = self.okienko_gry.after(1000, self.timerStart)
+
+        if self.stopTimer == 0:
+            self.okienko_gry.after_cancel(self.timerReload)
+
+
+
+    #
+    # def callBtn(self):
+    #     if self.czas == 0:
+    #         self.testbtnclick()
+    #     else:
+    #         pass
+
 
 
 
@@ -405,9 +338,6 @@ class Gra(DbRand):
         description
         -----------
         checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
-
-
-
         """
 
 
@@ -420,10 +350,8 @@ class Gra(DbRand):
             if self.slowojoin[i] == check:
                 pos.append(i)
 
-        # if len(pos) != 0:
         if pos:
             for i in pos:
-                # self.canvas.itemconfig(label_word[i], text = '{}'.format(self.slowojoin[i]))
                 label_word[i].config(text = '{}'.format(self.slowojoin[i]))
 
             licz_lifes = 0
@@ -476,10 +404,8 @@ class Gra(DbRand):
             if self.slowojoin[i] == check:
                 pos.append(i)
 
-        # if len(pos) != 0:
         if pos:
             for i in pos:
-                # self.canvas.itemconfig(label_word[i], text = '{}'.format(self.slowojoin[i]))
                 label_word[i].config(text = '{}'.format(self.slowojoin[i]))
 
             licz_lifes = 0
@@ -531,6 +457,7 @@ class Gra(DbRand):
             punkty = len(self.slowojoin)*1+ int(points_new)
             self.newPunkty()
             print(punkty)
+            self.enabledBtn()
 
         else:
             self.canvas.create_text(600, 300, font=('Futura PT Heave', 20), text='Niestety przegrałeś, \n sprobuj ponownie ',
@@ -539,6 +466,7 @@ class Gra(DbRand):
             punkty = len(self.slowojoin) * (-1)  + int(points_new)
 
             self.newPunkty()
+            self.enabledBtn()
 
 
 
@@ -672,8 +600,8 @@ class Gra(DbRand):
 
 
 
-        self.labelPoints = Label(self.okienko_gry, text = 'points: ' + points_new ,  font  = ('Futura PT Heave ',20 ) ).place(relx = 0.4, rely =0.95)
-
+        self.labelPoints = Label(self.okienko_gry, text = 'points: ' ,  font  = ('Futura PT Heave ',20 ) ).place(relx = 0.4, rely =0.95)
+        self.labelPointsNumber = self.canvas.create_text(520, 619, font=('Futura PT Heave', 20), text=points_new, tag='points')
 
 
 
@@ -710,10 +638,34 @@ class Gra(DbRand):
 
 
 
+    def delete_text(self):
+        """Function -  delete_text
+
+        description
+        -----------
+        clears the field after the end of the game
+
+        Used libraries
+        --------------
+        from tkinter import *
+
+        """
+        self.canvas.delete('rand_temat')
+        self.canvas.delete('winner')
+        self.canvas.delete('loser')
+        self.canvas.delete('word')
+        self.canvas.delete('head')
+        self.canvas.delete('body')
+        self.canvas.delete('lhand')
+        self.canvas.delete('rhand')
+        self.canvas.delete('lfoot')
+        self.canvas.delete('rfoot')
+        self.canvas.delete('points')
 
 
 
 
 
+    # points_new
 
 

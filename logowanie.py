@@ -3,13 +3,13 @@ from tkinter import ttk
 import psycopg2 as ps
 from tkinter import messagebox
 
-from gameHasloOduser import UserGame
+from gameHasloOduser import AllInGra
 from gra import  Gra
-import os
 
 
-class Logowanie(Gra):
-    def __init__(self, parent, width, height, title="Logowanie", resizable=(False, False) ):
+
+class Logowanie(Gra, AllInGra):
+    def __init__(self, parent, width, height, title="Authorization", resizable=(False, False) ):
         """ Function - __init__
 
         Parameters
@@ -39,14 +39,13 @@ class Logowanie(Gra):
         self.okno_logowania.title(title)
         self.okno_logowania.geometry(f"{width}x{height}+300+150") # размеры+ отступ от краев экрана
         self.okno_logowania.resizable (resizable[0], resizable [1])
-        # self.window1.wm_attributes("-topmost",1)
         self.okno_logowania.lift()
         self.okno_logowania.iconbitmap('filesImages/icon.ico')
         self.loguj()
 
 
 
-        # Button(self.okno_logowania, text = 'graj', command = self.okno_gryself, width=10, height=1).place(relx = 0.45, rely = 0.4)
+
 
 
 
@@ -80,13 +79,15 @@ class Logowanie(Gra):
 
 
 
-        self.hi_loguj = Label(self.okno_logowania, text = "Okno dla logowania, zaloguj się i graj").pack()
+        self.hi_loguj = Label(self.okno_logowania, text = "Login window, log in and play").pack()
 
         self.nick_logowanie = ttk.Entry(self.okno_logowania, width=30, justify=CENTER, textvariable = nickname_logowanie_bd).place(relx=0.3, rely=0.1)
-        self.label_nick = Label(self.okno_logowania, text="Wpisz swój nick: ").place(relx=0.01, rely=0.1)
+        self.label_nick = Label(self.okno_logowania, text="Enter your nickname: ").place(relx=0.01, rely=0.1)
 
-        self.graj_i_zalogujsie = ttk.Button(self.okno_logowania, text="zalogować się\nhaslo od komputera", command  = self.sprawdz_i_graj).place(relx=0.33, rely=0.3)
-        self.graj_i_zalogujsie_userhaslo = ttk.Button(self.okno_logowania, text = "zalogować się\nhaslo od uzytkownika", command  = self.userGame).place(relx = 0.33, rely= 0.5)
+        self.graj_i_zalogujsie = ttk.Button(self.okno_logowania, text="Game mode: normal", command  = self.sprawdz_i_graj,  width = 20)\
+            .place(relx=0.33, rely=0.3)
+        self.graj_i_zalogujsie_userhaslo = ttk.Button(self.okno_logowania, text = "Game mode: All-in", command  = self.userGame,  width = 20)\
+            .place(relx = 0.33, rely= 0.45)
 
 
 
@@ -156,15 +157,14 @@ class Logowanie(Gra):
 
         if not self.niknamelogowaniedb:
 
-            messagebox.showwarning('wiselca', 'nie ma takiego użytkownika, sprobuj ponownie!')
+            messagebox.showwarning('wiselca', 'there is no such user, try again!')
         else:
             self.points()
-            messagebox.showinfo('wiselca', 'możesz zaczynać gre!')
+            messagebox.showinfo('wiselca', 'you can start the game!\nAll words in English')
 
 
             Gra(self.okno_logowania, title = 'Gra', resizable = (False,False))
 
-            # os.system('python gra.py')
 
 
             Label(self.okno_logowania, text=self.niknamelogowaniedb, font="Courier 20").place(relx=0.01, rely=0.9)
@@ -206,12 +206,11 @@ class Logowanie(Gra):
 
         if not self.niknamelogowaniedb:
 
-            messagebox.showwarning('wiselca', 'nie ma takiego użytkownika, sprobuj ponownie!')
+            messagebox.showwarning('wiselca', 'there is no such user, try again!')
         else:
             self.points()
-            messagebox.showinfo('wiselca', 'możesz zaczynać gre!')
-            # сделать лейбл на главном экране и отблокировать кнопку игры и в поле игры тоже добавить ник
-            UserGame(self.okno_logowania, title = 'Gra', resizable = (False,False))
+            messagebox.showinfo('wiselca', 'you can start the game!\nAll words in English')
+            AllInGra(self.okno_logowania, title = 'Gra', resizable = (False,False))
             Label(self.okno_logowania, text=self.niknamelogowaniedb, font="Courier 20").place(relx=0.01, rely=0.9)
 
 
