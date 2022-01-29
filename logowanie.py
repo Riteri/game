@@ -184,7 +184,7 @@ class Logowanie(Gra, AllInGra):
 
 
 
-            Label(self.okno_logowania, text=self.niknamelogowaniedb, font="Courier 20").place(relx=0.01, rely=0.9)
+            Label(self.okno_logowania, text=nickname_logowanie_bd.get(), font="Courier 20").place(relx=0.01, rely=0.9)
 
 
         self.conn.close()
@@ -229,7 +229,7 @@ class Logowanie(Gra, AllInGra):
             self.points()
             messagebox.showinfo('wiselca', 'you can start the game!\nAll words in English')
             AllInGra(self.okno_logowania, title = 'Gra', resizable = (False,False))
-            Label(self.okno_logowania, text=self.niknamelogowaniedb, font="Courier 20").place(relx=0.01, rely=0.9)
+            Label(self.okno_logowania, text=nickname_logowanie_bd.get(), font="Courier 20").place(relx=0.01, rely=0.9)
 
 
         self.conn.close()

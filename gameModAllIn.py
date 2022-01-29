@@ -129,10 +129,14 @@ class AllInGra(DbRand):
 
         """
 
-        self.lin1 = self.canvas.create_line(100, 460, 100, 100, width = 4  ) #cлева 1
-        self.lin2 = self.canvas.create_line(100, 100, 900 //3, 100, width = 4) # сверху верхняя
+        self.lin1 = self.canvas.create_line(100, 460, 100, 90, width = 4  ) #cлева 1
+        self.lin2 = self.canvas.create_line(90, 100, 900 //3, 100, width = 4) # сверху верхняя
         self.lin3 = self.canvas.create_line(900//3, 100, 900//3, 150, width =4) #сбоку
-        self.lin4 = self.canvas.create_line(50,460, 300, 460, width=4)
+        self.lin4 = self.canvas.create_line(35,460, 300, 460, width=4)  #снизу
+
+        self.lin5 = self.canvas.create_line(80,135,140,85, width =4 ) # косая сверху
+        self.lin6 = self.canvas.create_line(100, 420, 50, 460, width = 4) # слева снизу косая
+        self.lin7 = self.canvas.create_line(100,420, 150, 460, width = 4) # справа снизу косая
 
 
 
@@ -265,7 +269,7 @@ class AllInGra(DbRand):
         global lifes_label, lifes
         lifes = 5
 
-        lifes_text = Label(self.okienko_gryAllIn, text = 'życie: ', font = ('Futura PT Heave ',20 ))
+        lifes_text = Label(self.okienko_gryAllIn, text = 'lifes: ', font = ('Futura PT Heave ',20 ))
         lifes_text.place(x = 800,rely = 0.95)
 
         lifes_label = Label(self.okienko_gryAllIn, text = '{}'.format(lifes),font = ('Futura PT Heave ',20 ))
@@ -278,7 +282,7 @@ class AllInGra(DbRand):
     def posTimer(self):
         self.czas = 30
         self.stopTimer = 5
-        self.labelTime = Label(self.okienko_gryAllIn, text = 'czas przed rysowaniem linii: {}'.format(self.czas),
+        self.labelTime = Label(self.okienko_gryAllIn, text = 'Time before line drawing: {}'.format(self.czas),
                                font = ('Futura PT Heave ',12 ), fg = 'purple')
         self.labelTime.place(relx = 0.68, rely = 0.55)
 
@@ -301,7 +305,7 @@ class AllInGra(DbRand):
 
         if self.czas !=0:
 
-            self.labelTime.config(text = 'czas przed rysowaniem linii: {}'.format(self.czas))
+            self.labelTime.config(text = 'Time before line drawing: {}'.format(self.czas))
             self.timerReload = self.okienko_gryAllIn.after(1000, self.timerStart)
         if self.czas == 0:
             # self.callBtn()
@@ -460,7 +464,7 @@ class AllInGra(DbRand):
             btn.destroy()
 
         if status == 'win':
-            self.canvas.create_text(600, 300, font =('Futura PT Heave', 20), text = 'Gratuluję z wygraniem', fill = 'green', tag = 'winner')
+            self.canvas.create_text(600, 300, font =('Futura PT Heave', 20), text = 'Congratulations on winning', fill = 'green', tag = 'winner')
 
 
             punkty = int(points_new) + abs(int(points_new)) +1
@@ -469,13 +473,20 @@ class AllInGra(DbRand):
             self.enabledBtn()
 
         else:
-            self.canvas.create_text(600, 300, font=('Futura PT Heave', 20), text='Niestety przegrałeś, \n sprobuj ponownie ',
+            self.canvas.create_text(600, 300, font=('Futura PT Heave', 20), text='sorry you lost, try again ',
                                     fill='red', tag = 'loser')
 
             punkty = int(points_new)  - abs(int(points_new)) -1
 
             self.newPunkty()
+
+            self.canvas.create_text(600, 30, text='search word :  ' + self.slowojoin, fill="black",
+                                    font=("Futura PT Heave ", 18) \
+                                    , tag='searchWord')
+
             self.enabledBtn()
+
+
 
 
 
@@ -513,6 +524,14 @@ class AllInGra(DbRand):
         elif life == 0:
             self.l_foot = self.canvas.create_line(300, 320, 250, 430, width=3, tag = 'lfoot')
             self.r_foot = self.canvas.create_line(300, 320, 350, 430, width=3, tag = 'rfoot')
+
+            self.l_eye1 = self.canvas.create_line(285, 165, 290, 170, width=2 , tag = 'l_eye1')
+            self.l_eye2 = self.canvas.create_line(290, 165, 285, 170, width = 2, tag = 'l_eye2')
+
+
+
+            self.r_eye1 = self.canvas.create_line(310, 165, 315, 170, width=2, tag = 'r_eye1')
+            self.r_eye2 = self.canvas.create_line(315, 165, 310, 170, width = 2, tag = 'r_eye2')
 
             self.gameOverr('lose')
 
@@ -675,6 +694,11 @@ class AllInGra(DbRand):
         self.canvas.delete('rfoot')
         self.canvas.delete('HiText')
         self.canvas.delete('points')
+        self.canvas.delete('l_eye1')
+        self.canvas.delete('l_eye2')
+        self.canvas.delete('r_eye1')
+        self.canvas.delete('r_eye2')
+        self.canvas.delete('searchWord')
 
 
 
