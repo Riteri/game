@@ -223,7 +223,7 @@ class Rejestracja :
                     
                     """
                     from_email = 'wisielcabyantondidytskyi@gmail.com'
-                    password = 'ygiq hrmq ghib qmbh'
+                    password = 'zktn zfpc bcoi ecjd'
 
                     recipient = self.adres_email.get()
 
@@ -255,24 +255,12 @@ class Rejestracja :
 
                     """"""
 
-                    self.conn = ps.connect(
-                        "host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
-                    self.cur = self.conn.cursor()
+                    self.dodawanieDanych_do_bazy()
 
-                    self.cur.execute("INSERT INTO bdgraczy (nick, email, plec, haslo, sciezka_do_avataru) VALUES " + \
-                                     "(" + "'" + self.nick.get() + "'" + "," + "'" + self.adres_email.get() +
-                                     "'" + "," + "'" + self.plec.get() + "'" + "," + "'" + self.haslo.get() + "'" + "," + "'" + self.avatar + "'" + ")")
-
-                    self.conn.commit()
-                    self.cur.close()
-                    self.conn.close()
-
-                    messagebox.showinfo('Crete', 'User has been created!')
-                    self.dodawanie_niku_do_bazy_points()
-                    self.okno_rejestracji.destroy()
 
                 except:
-                    messagebox.showinfo('wrong data', 'you entered incorrect data, please try again')
+                    messagebox.showinfo('wrong data', 'you entered incorrect data, please try again\nbut the account was created')
+                    self.dodawanieDanych_do_bazy()
 
 
             else:
@@ -283,6 +271,23 @@ class Rejestracja :
             messagebox.showwarning('wiselca', 'This nickname is taken')
 
 
+    def dodawanieDanych_do_bazy(self):
+
+        self.conn = ps.connect(
+            "host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
+        self.cur = self.conn.cursor()
+
+        self.cur.execute("INSERT INTO bdgraczy (nick, email, plec, haslo, sciezka_do_avataru) VALUES " + \
+                         "(" + "'" + self.nick.get() + "'" + "," + "'" + self.adres_email.get() +
+                         "'" + "," + "'" + self.plec.get() + "'" + "," + "'" + self.haslo.get() + "'" + "," + "'" + self.avatar + "'" + ")")
+
+        self.conn.commit()
+        self.cur.close()
+        self.conn.close()
+
+        messagebox.showinfo('Crete', 'User has been created!')
+        self.dodawanie_niku_do_bazy_points()
+        self.okno_rejestracji.destroy()
 
 
 

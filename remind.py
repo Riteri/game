@@ -29,11 +29,11 @@ class Remind:
         Label(self.remindWindow, text = '      If you have forgotten your password, you can send it to your email', fg = 'black').place(x = 0, y = 0)
 
         Label(self.remindWindow, text = 'Enter your nickname: ').place(relx = 0, rely = 0.25)
-        self.entryNick = ttk.Entry(self.remindWindow, width=30,justify=CENTER, textvariable=  self.nickStr)
+        self.entryNick = ttk.Entry(self.remindWindow, width=30, textvariable=  self.nickStr)
         self.entryNick.place(relx = 0.4, rely = 0.25)
 
         Label(self.remindWindow, text= 'Enter your email address: ').place(relx = 0, rely = 0.4)
-        self.entryEmail = ttk.Entry(self.remindWindow, width=30, justify= CENTER, textvariable=self.emailStr)
+        self.entryEmail = ttk.Entry(self.remindWindow, width=30, textvariable=self.emailStr)
         self.entryEmail.place(relx = 0.4, rely = 0.4)
 
         ttk.Button(self.remindWindow, text = 'Send data by email', command = self.password_search).place(relx = 0.4, rely = 0.6)
@@ -66,7 +66,7 @@ class Remind:
             messagebox.showinfo('Wrong data', 'check the entered data\nor such user does not exist')
         else:
             from_email = 'wisielcabyantondidytskyi@gmail.com'
-            password = 'ygiq hrmq ghib qmbh'
+            password = 'zktn zfpc bcoi ecjd'
 
             recipient = self.emailStr.get()
 
