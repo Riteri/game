@@ -4,44 +4,35 @@ from dbslowa import DbRand
 from tkinter import ttk, messagebox
 import os
 import psycopg2 as ps
-# import threading
-# import schedule
-# import time
-# from threading import Timer
+
 
 
 
 class Gra(DbRand):
 
     def __init__(self, parent, title="game mod normal", resizable=(False, False) ):
-        """ Function - __init__
+        """
+            : __init__
 
-        description
-        -----------
-        .lift()
-            gives an advantage in the location of windows
-        .iconbitmap
-            adds an icon to the application
-        .title()
-            sets the title of the window
-
-
-        Used libraries
-        --------------
-        from tkinter import *
-        from dbslowa import DbRand
-        from tkinter import  ttk
-        import os
-        import psycopg2 as ps
-        import threading
-        import schedule
-        import time
-        from threading import Timer
+            :description: .lift()
+                gives an advantage in the location of windows
+                .iconbitmap
+                    adds an icon to the application
+                .title()
+                    sets the title of the window
 
 
-        :param parent:
-        :param title: Gra
-        :param resizable: (False, False)
+            :Used libraries:
+                from tkinter import *
+                from dbslowa import DbRand
+                from tkinter import  ttk
+                import os
+                import psycopg2 as ps
+
+
+            :param parent:
+            :param title: game mod normal
+            :param resizable: (False, False)
         """
         self.okienko_gry = Toplevel(parent)
 
@@ -88,21 +79,16 @@ class Gra(DbRand):
 
 
     def line(self):
-        """Function - line
+        """
+            :line
 
-        Parameters
-        ----------
-        y: int
-        x: int
+            :param y: int
+            :param x: int
 
-        description
-        -----------
-        draws lines creating a notebook effect
+            :description:
+                draws lines creating a notebook effect
 
-        Used libraries
-        --------------
-        from tkinter import *
-
+            :Used libraries: from tkinter import *
         """
         y = 0
         while y < 680:
@@ -114,16 +100,12 @@ class Gra(DbRand):
 
 
     def start_pos_man(self):
-        """ Function start_pos_man
+        """
+            :start_pos_man
 
-        description
-        -----------
-        draws the gallows
+            :description: draws the gallows
 
-        Used libraries
-        --------------
-        from tkinter import *
-
+            :Used libraries:  from tkinter import *
         """
         self.lin1 = self.canvas.create_line(100, 460, 100, 90, width = 4  ) #cлева 1
         self.lin2 = self.canvas.create_line(90, 100, 900 //3, 100, width = 4) # сверху верхняя
@@ -144,23 +126,20 @@ class Gra(DbRand):
 
 
     def alphabet_start(self):
-        """ Function alphabet_start
+        """
+            :alphabet_start
 
-        Parameters
-        ----------
-        self.shift_x: int
-        self.count: int
-        buttons: list
+            :param self.shift_x:int
 
-        description
-        -----------
-        places buttons with letters of the alphabet
+            :param self.count:int
+            :param buttons: list
 
-        Used libraries
-        --------------
-        from tkinter import *
+            :description: places buttons with letters of the alphabet
+
+            :Used libraries: from tkinter import *
 
         """
+
 
 
         global buttons
@@ -195,16 +174,12 @@ class Gra(DbRand):
 
 
     def randThems(self):
-        """Function -  randThems
+        """
+            :randThems
 
-        description
-        -----------
-        displays the topic of the word
+            :description: displays the topic of the word
 
-        Used libraries
-        --------------
-        from tkinter import *
-
+            :Used libraries: from tkinter import *
         """
 
         self.canvas.create_text(200, 30, text='Word theme: '+self.random_thems, fill="black", font=("Futura PT Heave ", 18), tag = 'rand_temat')
@@ -214,22 +189,16 @@ class Gra(DbRand):
 
 
     def start_pos_word(self):
-        """ Function - start_pos_word
+        """
+            :start_pos_word
 
-        Parameters
-        ----------
-        label_word: list
-        label_under: Label
-        self.shift: int
+            :param  label_word:list
+            :param  label_under:  Label
+            :param  self.shift: int
 
-        description
-        -----------
-        draws word length underscores
+            :description:  draws word length underscores
 
-        Used libraries
-        --------------
-        from tkinter import *
-
+            :Used libraries: from tkinter import *
         """
 
         global  label_word, label_under
@@ -248,26 +217,26 @@ class Gra(DbRand):
 
 
     def deleteLabel(self):
+        """
+            :deleteLabel
+
+            :description: delete label
+
+        """
         for i in range(len(self.slowojoin)):
             label_word[i].destroy()
 
 
-    # выводит на экран сколько у нас осталось жизни
+
     def lifes(self):
-        """Function lifes
+        """
+            :lifes
 
-        Parameters
-        ----------
-        lifes: int
+            :param  lifes: int
 
-        description
-        -----------
-        displays the number of lives
+            :description: displays the number of lives
 
-        Used libraries
-        --------------
-        from tkinter import *
-
+            :Used libraries: from tkinter import *
         """
 
 
@@ -282,6 +251,13 @@ class Gra(DbRand):
 
 
     def posTimer(self):
+        """
+            :posTimer
+
+            :description: add timer
+
+
+        """
         self.czas = 30
         self.stopTimer = 5
         self.labelTime = Label(self.okienko_gry, text = 'Time before line drawing: {}'.format(self.czas),
@@ -291,17 +267,14 @@ class Gra(DbRand):
 
 
     def timerStart(self):
-        """ Function timerStart
+        """
+            :timerStart
 
-        Parameters
-        ----------
-        self.czas: int
-        self.stopTimer: int
-        self.labelTime: Label
+            :param  self.czas: int
+            :param  self.stopTimer: int
+            :param  self.labelTime: Label
 
-        Used libraries
-        --------------
-        from tkinter import *
+            :Used libraries: from tkinter import *
         """
 
 
@@ -324,32 +297,19 @@ class Gra(DbRand):
 
 
 
-    #
-    # def callBtn(self):
-    #     if self.czas == 0:
-    #         self.testbtnclick()
-    #     else:
-    #         pass
 
 
-
-
-    # костыли xd но работает , тут я сделал просто функцию
     def testbtnclick(self):
-        """ Function - testbtnclick
-
-        parameter
-        ---------
-        check: str
-        pos: list
-        licz_lifes: int
-        life: int
-
-        description
-        -----------
-        checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
         """
+            :testbtnclick
 
+            :param check: str
+            :param  pos: list
+            :param licz_lifes: int
+            :param life: int
+
+            :description: checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
+        """
 
         global  life
 
@@ -386,23 +346,18 @@ class Gra(DbRand):
 
 
     def check_btn(self, event):
-        """Function - check_btn
+        """
+            :check_btn
+
+            :param  check : str
+            :param pos : list
+            :param licz_lifes:  int
+            :param life : int
+
+            :description: checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
 
 
-        parameter
-        ---------
-        check: str
-        pos: list
-        licz_lifes: int
-        life: int
-
-        description
-        -----------
-        checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
-
-
-        :param event:
-        :return:
+            :param event:
         """
 
         global  life
@@ -441,18 +396,14 @@ class Gra(DbRand):
 
 
     def gameOverr(self, status):
-        """ Function - game overr
+        """
+            :game overr
 
-        description
-        -----------
-        in case of victory and defeat, it displays the corresponding inscription on the screen,
-        also adds or subtracts points and calls the function for recording points in the table
+            :description: in case of victory and defeat, it displays the corresponding inscription on the screen, also adds or subtracts points and calls the function for recording points in the table
 
-        Used libraries
-        --------------
-        from tkinter import *
+            :Used libraries: from tkinter import *
 
-        :param status: str
+            :param status: str
         """
 
         global  punkty
@@ -498,22 +449,16 @@ class Gra(DbRand):
 
 
     def draw(self, life):
-        """ Function - draw
+        """
+            :draw
 
-        Parameters
-        -----------
-        life : int
+            :param life: int
 
-        description
-        -----------
-        checks the number of lives and draws lines according to their number
+            :description: checks the number of lives and draws lines according to their number
 
-        Used libraries
-        --------------
-        from tkinter import *
+            :Used libraries: from tkinter import *
 
-        :param life: int
-        :return:
+            :param life: int
         """
 
 
@@ -547,18 +492,13 @@ class Gra(DbRand):
 
 
     def readtxt(self):
-        """ Function -  readtxt
+        """
+            :readtxt
 
-        Parameters
-        -----------
-        f: File
-        nick_is_points: str
+            :param f : File
+            :param nick_is_points: str
 
-        description
-        -----------
-        reads txt file and gets values from there
-        after reading it immediately deletes it
-
+            :description: reads txt file and gets values from there after reading it immediately deletes it
         """
 
         global nick_is_points
@@ -575,19 +515,15 @@ class Gra(DbRand):
 
     # тут обращаюсь к 2м базам и достаю из них данные, с базы points достаю ник и очки
     def dbpoints(self):
-        """ Function dbpoints
+        """
+            :dbpoints
 
-        Parameters
-        ----------
-        points_for_nick: tuple
-        points_new: tuple
+            :param points_for_nick: tuple
+            :param points_new: tuple
 
+            :Used libraries: import psycopg2 as ps
 
-        Used libraries
-        --------------
-        import psycopg2 as ps
-
-        :return: tuple
+            :return: tuple
         """
 
         global  points_for_nick, points_new
@@ -614,22 +550,15 @@ class Gra(DbRand):
 
 
     def nickIPointsIavatar(self):
+        """
+            :nickIPointsIavatar
 
-        """ Function - nickIPointsIavatar
+            :param self.labelNickGame: Label
+            :param self.labelPoints: label
 
-        Parameters
-        ----------
-          self.labelNickGame: Label
-          self.labelPoints: label
+            :Description: displays nickname and number of points
 
-        Description
-        -----------
-        displays nickname and number of points
-
-        Used libraries
-        --------------
-        from tkinter import *
-
+            :Used libraries: from tkinter import *
         """
 
         self.labelNickGame = Label(self.okienko_gry, text = 'nick: ' + nick_is_points, font = ('Futura PT Heave ',20 ) )
@@ -644,19 +573,15 @@ class Gra(DbRand):
 
     # загружает в таблицу наши пункты
     def newPunkty(self):
-        """ Function -  newPunkty
+        """
+            :newPunkty
 
-        Parameters
-        ----------
-         points.execute: database
+            :param points.execute: database
 
-         Description
-         -----------
-         uploads the received points to the database
+            :Description: uploads the received points to the database
 
-         Used libraries
-         --------------
-         import psycopg2 as ps
+            :Used libraries: import psycopg2 as ps
+
 
         """
         conn = ps.connect("host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
@@ -676,16 +601,12 @@ class Gra(DbRand):
 
 
     def delete_text(self):
-        """Function -  delete_text
+        """
+            :delete_text
 
-        description
-        -----------
-        clears the field after the end of the game
+            :description: clears the field after the end of the game
 
-        Used libraries
-        --------------
-        from tkinter import *
-
+            :Used libraries: from tkinter import *
         """
         self.canvas.delete('rand_temat')
         self.canvas.delete('winner')

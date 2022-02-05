@@ -8,7 +8,15 @@ from email.mime.multipart import MIMEMultipart
 
 
 class Remind:
-    def __init__(self, parent, title="Wisielca", resizable=(False, False) ):
+    def __init__(self, parent, title="remindWindow", resizable=(False, False) ):
+
+        """
+            :__init__
+
+            :param title: remindWindow
+            :param resizable: False, False
+        """
+
         self.remindWindow = Toplevel(parent)
 
         self.remindWindow.title(title)
@@ -22,6 +30,13 @@ class Remind:
 
 
     def entryLabels(self):
+        """
+            :entryLabels
+
+             :param self.nickStr: StringVar()
+             :param self.emailStr: StringVar()
+
+        """
 
         self.nickStr = StringVar()
         self.emailStr = StringVar()
@@ -42,6 +57,12 @@ class Remind:
 
 
     def password_search(self):
+        """
+            :password_search
+
+            :description: sends an email with a password
+        """
+
         self.conn = ps.connect(
             "host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
 

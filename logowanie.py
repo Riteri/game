@@ -11,29 +11,27 @@ from remind import Remind
 
 class Logowanie(Gra, AllInGra):
     def __init__(self, parent, width, height, title="Authorization", resizable=(False, False) ):
-        """ Function - __init__
+        """
+            :__init__
 
-        Parameters
-        ----------
-        self.okno_logowania.iconbitmap: tkinter
-            adds an icon to the application
+            :param self.okno_logowania.iconbitmap: tkinter adds an icon to the application
 
-        description
-        -----------
-        .lift()
-            gives an advantage in the location of windows
-        .iconbitmap
-            adds an icon to the application
-        .title()
-            sets the title of the window
+            :description:
+
+                .lift()
+                    gives an advantage in the location of windows
+                .iconbitmap
+                    adds an icon to the application
+                .title()
+                    sets the title of the window
 
 
 
-        :param parent:
-        :param width: 400
-        :param height: 300
-        :param title: Logowanie
-        :param resizable: (False, False)
+            :param parent:
+            :param width: 400
+            :param height: 300
+            :param title: Logowanie
+            :param resizable: (False, False)
         """
 
         self.okno_logowania = Toplevel(parent)
@@ -51,26 +49,22 @@ class Logowanie(Gra, AllInGra):
 
 
     def loguj(self):
-        """ Function - loguj
+        """
+            :loguj
 
-        Parameters
-        ----------
-        self.haslo_logowanie_bd: StringVar()
-        nickname_logowanie_bd: StringVar()
+            :param self.haslo_logowanie_bd: StringVar()
+            :param nickname_logowanie_bd: StringVar()
 
-        self.hi_loguj: Label
-        self.nick_logowanie: ttk.Entry
-            place to enter a nickname
+            :param self.hi_loguj: Label
+            :param self.nick_logowanie: ttk.Entry place to enter a nickname
 
-        self.graj_i_zalogujsie: ttk.Button
-            login button (word for game is  database )
-        self.graj_i_zalogujsie_userhaslo: ttk.Button
-            login button(the word for the game is entered by the user)
+            :param self.graj_i_zalogujsie: ttk.Button login button (word for game is  database )
+            :param self.graj_i_zalogujsie_userhaslo: ttk.Button
 
-        Used libraries
-        -------------
-        tkinter import *
-        tkinter import ttk
+
+            :Used libraries:
+                tkinter import *
+                tkinter import ttk
         """
 
         global nickname_logowanie_bd
@@ -108,33 +102,17 @@ class Logowanie(Gra, AllInGra):
 
 
     def points(self):
-        """ Function points
+        """
+            :points
 
-        Parameters
-        ----------
-        self.nickpoints: database
+            :param f: File
 
-        f: File
+            :description:
+                writes nickname and points to txt file
 
-        description
-        -----------
-            writes nickname and points to txt file
-
-        :return: tuple
         """
 
-        # self.conn = ps.connect(
-        #     "host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
-        #
-        # self.nickpoints = self.conn.cursor()
-        #
-        # self.nickpoints.execute("SELECT *  FROM points WHERE nick = " + "'" + nickname_logowanie_bd.get() + "'")
-        #
-        # self.pointsNickname  = self.nickpoints.fetchall()
-        #
-        #
-        #
-        # self.nicknamepointsjoin = " ".join(map(''.join, self.niknamelogowaniedb))
+
 
         #открываем файл и записываем туда ник и очки
         f = open('points.txt', 'w')
@@ -144,19 +122,17 @@ class Logowanie(Gra, AllInGra):
 
 
     def sprawdz_i_graj(self):
-        """ Function - sprawdz_i_graj
+        """
+            :sprawdz_i_graj
 
-        Parameters
-        ----------
-        self.imie.execute: database
-        self.niknamelogowaniedb: tuple
+            :param self.imie.execute: database
+            :param self.niknamelogowaniedb: tuple
 
-        description
-        -----------
-        checking if the entered nickname is in the database, if it matches,
-        a window with the game opens, if the user is not found, an error is displayed
+            :description:
 
-        :return: tuple, messagebox
+                checking if the entered nickname is in the database, if it matches,
+                a window with the game opens, if the user is not found, an error is displayed
+
         """
 
         self.conn = ps.connect(
@@ -196,20 +172,18 @@ class Logowanie(Gra, AllInGra):
 
 
     def userGame(self):
-        """ Function - userGame
+        """
+            :userGame
 
-        Parameters
-        ----------
-        self.imie.execute: database
-        self.niknamelogowaniedb: tuple
+            :param self.imie.execute: database
+            :param self.niknamelogowaniedb: tuple
 
-        description
-        -----------
-        checking if the entered nickname is in the database, if it matches,
-        a window with the game opens, if the user is not found, an error is displayed
+            :description:
+                checking if the entered nickname is in the database, if it matches,
+                a window with the game opens, if the user is not found, an error is displayed
 
 
-        :return: tuple
+            :return: tuple
         """
 
 

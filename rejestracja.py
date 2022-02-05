@@ -12,30 +12,24 @@ from email.mime.multipart import MIMEMultipart
 
 class Rejestracja :
     def __init__(self, parent, width, height, title="Registration window", resizable=(False, False) ):
-        """Function __init__ class Rejestracja
+        """
+            :__init__
 
-        Parameters
-        ----------
-         self.okno_rejestracji: Toplevel tkinter
-        self.okno_rejestracji.iconbitmap: tkinter
-            adds an icon to the application
+            :param self.okno_rejestracji: Toplevel tkinter
+            :param self.okno_rejestracji.iconbitmap: tkinter
 
-        description
-        -----------
-        .lift()
-            gives an advantage in the location of windows
-        .iconbitmap
-            adds an icon to the application
-        .title()
-            sets the title of the window
+            :description:
+                .lift()
+                    gives an advantage in the location of windows
+                .iconbitmap
+                    adds an icon to the application
+                .title()
+                    sets the title of the window
 
-
-
-        :param parent:
-        :param width: 500
-        :param height: 400
-        :param title: Okno rejestracji
-        :param resizable: (False, False)
+            :param width: 500
+            :param height: 400
+            :param title: Okno rejestracji
+            :param resizable: (False, False)
         """
 
         self.okno_rejestracji = Toplevel(parent)
@@ -49,40 +43,38 @@ class Rejestracja :
 
 
     def rej(self):
-        """ Function - rej (rejestracja (pl)) (registration)
+        """
+            :rej
 
-            Parameters
-            ----------
-            self.nick: StringVar()
-            self.adres_email: StringVar()
-            self.plec: StringVar()
-            self.haslo: StringVar()
-            Label: tkinter.Label
+            :param self.nick: StringVar()
+            :param self.adres_email: StringVar()
+            :param self.plec: StringVar()
+            :param self.haslo: StringVar()
+            :param Label: tkinter.Label
 
-            self.hi_rej : Label
+            :param self.hi_rej : Label
                 label with text - (okno dla rejestracji, wpisz swoje danne)
 
-            self.nick_rejestracja: ttk.Entry
+            :param self.nick_rejestracja: ttk.Entry
                 place to enter a nickname
 
-            self.adres_email_rejestracja: ttk.Entry
+            :param self.adres_email_rejestracja: ttk.Entry
                 place to enter a e-mail
 
-            self.plec_rejestracja: ttk.Entry
+            :param self.plec_rejestracja: ttk.Entry
                 place to indicate gender
 
-            self.avatar_rejestracja: ttk.Button
+            :param self.avatar_rejestracja: ttk.Button
                 opens a window for choosing an avatar
 
-            self.save_dane_rejestracja: ttk.Button
+            :param self.save_dane_rejestracja: ttk.Button
                 button for saving data to the database with the command -  self.sprawdzanie_nicknamu()
 
-            Used libraries
-            --------------
-            tkinter import *
-            tkinter import ttk
+            :Used libraries:
+                tkinter import *
+                tkinter import ttk
 
-        :return: str
+
         """
 
 
@@ -124,16 +116,13 @@ class Rejestracja :
 
 
     def dodawanie_niku_do_bazy_points(self):
-        """ Function - dodawanie_niku_do_bazy_points
+        """
+            :dodawanie_niku_do_bazy_points
 
-            Parameters
-            ----------
-            self.newNickPoints.execute: database
+            :param self.newNickPoints.execute: database
                 adding a nickname and points to the database points (initially 0 )
 
-            Used libraries
-            --------------
-            import psycopg2 as ps
+            :Used libraries: import psycopg2 as ps
 
         """
         self.com = ps.connect(
@@ -150,14 +139,12 @@ class Rejestracja :
 
     #Добавление аватарки
     def avatar(self):
-        """ Function  avatar
-            Parameters
-            ----------
-
-            self.avatar:askopenfilename
+        """
+            :avatar
+            :param self.avatar:askopenfilename
                 opens a window and asks the user to select a file
 
-            Used libraries
+            :Used libraries:
                 from tkinter import filedialog
         """
         self.avatar = filedialog.askopenfilename(parent=self.okno_rejestracji)
@@ -166,28 +153,28 @@ class Rejestracja :
 
 
     def sprawdzanie_nicknamu(self):
-        """ Function - sprawdzanie_nicknamu
+        """
+            :sprawdzanie_nicknamu
 
-            Parameters
-            ----------
-            self.sprawdzanieNik: database
+            :param self.sprawdzanieNik: database
                 makes a query to the database and places the result in a variable self.niknameisbase
 
-            self.niknameisbase: tuple
+            :param self.niknameisbase: tuple
+            :param from_email: str
+            :param recipient: str
 
 
-            description
-            -----------
-            checking whether the nickname entered by the user exists in the database,
-            if it does not, it puts the entered data, and if it does, it throws an error
+            :description:
+                checking whether the nickname entered by the user exists in the database,
+                if it does not, it puts the entered data, and if it does, it throws an error
+
+                sends a message to the mail
 
 
 
-            Used libraries
-            --------------
-            import psycopg2 as ps
+            :Used libraries: import psycopg2 as ps
 
-        :return: messagebox, tuple
+            :return: messagebox, tuple
         """
 
 
