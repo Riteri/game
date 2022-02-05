@@ -13,16 +13,13 @@ class DbRand :
 
     #не работает
     def json(self):
-        """ Function json
+        """
+            :json
 
-        Parameters
-        ----------
-        file: File.json
-        key:key
+            :param:file -  File.json
+            :param: key - key
 
-        Description
-        -----------
-        writing words and topics in encrypted form to json file
+            :Description: writing words and topics in encrypted form to json file
 
         """
 
@@ -69,19 +66,16 @@ class DbRand :
 
 
     def dbrand(self):
-        """ Function dbrand
+        """
+            :dbrand
 
-        Parameters
-        ----------
-        self.random_thems: list
-        self.randomslowa : tuple
-        self.slowa_json: json
+            :param: self.random_thems - list
+            :param: self.randomslowa - tuple
+            :param: self.slowa_json -  json
 
-        Description
-        -----------
-        through random, a random topic is selected from the list, then the type is changed to string and a query is sent to the table
-        after, from the list, a random word is randomly selected, which the user will guess.
-        an encrypted json file is also created.
+            :Description: through random, a random topic is selected from the list, then the type is changed to string and a query is sent to the table
+                            after, from the list, a random word is randomly selected, which the user will guess.
+                            an encrypted json file is also created.
 
         """
 
@@ -136,7 +130,7 @@ class DbRand :
 
 
 
-            """создание json файла """
+
 
             self.slowa_json = {
                 'slowa_i_tematy' : [

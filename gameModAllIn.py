@@ -14,34 +14,33 @@ import psycopg2 as ps
 class AllInGra(DbRand):
 
     def __init__(self, parent, title="Game mod allin", resizable=(False, False) ):
-        """ Function - __init__
+        """
+        : __init__
 
-        description
-        -----------
-        .lift()
-            gives an advantage in the location of windows
-        .iconbitmap
-            adds an icon to the application
-        .title()
-            sets the title of the window
-
-
-        Used libraries
-        --------------
-        from tkinter import *
-        from dbslowa import DbRand
-        from tkinter import  ttk
-        import os
-        import psycopg2 as ps
-        import threading
-        import schedule
-        import time
-        from threading import Timer
+        :description:
+            .lift()
+                gives an advantage in the location of windows
+            .iconbitmap
+                adds an icon to the application
+            .title()
+                sets the title of the window
 
 
-        :param parent:
-        :param title: Gra
-        :param resizable: (False, False)
+        :Used libraries:
+            from tkinter import *
+            from dbslowa import DbRand
+            from tkinter import  ttk
+            import os
+            import psycopg2 as ps
+            import threading
+            import schedule
+            import time
+            from threading import Timer
+
+
+            :param parent:
+            :param title: Gra
+            :param resizable: (False, False)
         """
         self.okienko_gryAllIn = Toplevel(parent)
 
@@ -91,21 +90,16 @@ class AllInGra(DbRand):
 
 
     def line(self):
-        """Function - line
+        """
+            :line
 
-        Parameters
-        ----------
-        y: int
-        x: int
+            :param y- int
+            :param x - int
 
-        description
-        -----------
-        draws lines creating a notebook effect
+            :description:
+                draws lines creating a notebook effect
 
-        Used libraries
-        --------------
-        from tkinter import *
-
+            :Used libraries: from tkinter import *
         """
         y = 0
         while y < 680:
@@ -117,16 +111,12 @@ class AllInGra(DbRand):
 
 
     def start_pos_man(self):
-        """ Function start_pos_man
+        """
+            :start_pos_man
 
-        description
-        -----------
-        draws the gallows
+            :description: draws the gallows
 
-        Used libraries
-        --------------
-        from tkinter import *
-
+            :Used libraries:  from tkinter import *
         """
 
         self.lin1 = self.canvas.create_line(100, 460, 100, 90, width = 4  ) #cлева 1
@@ -141,21 +131,17 @@ class AllInGra(DbRand):
 
 
     def alphabet_start(self):
-        """ Function alphabet_start
+        """
+            :alphabet_start
 
-        Parameters
-        ----------
-        self.shift_x: int
-        self.count: int
-        buttons: list
+            :param self.shift_x - int
 
-        description
-        -----------
-        places buttons with letters of the alphabet
+            :param self.count - int
+            :param buttons - list
 
-        Used libraries
-        --------------
-        from tkinter import *
+            :description: places buttons with letters of the alphabet
+
+            :Used libraries: from tkinter import *
 
         """
 
@@ -193,16 +179,12 @@ class AllInGra(DbRand):
 
 
     def randThems(self):
-        """Function -  randThems
+        """
+            :randThems
 
-        description
-        -----------
-        displays the topic of the word
+            :description: displays the topic of the word
 
-        Used libraries
-        --------------
-        from tkinter import *
-
+            :Used libraries: from tkinter import *
         """
 
         self.canvas.create_text(200, 30, text='Word theme: '+self.random_thems, fill="black", font=("Futura PT Heave ", 18), tag = 'rand_temat')
@@ -212,22 +194,16 @@ class AllInGra(DbRand):
 
 
     def start_pos_word(self):
-        """ Function - start_pos_word
+        """
+            :start_pos_word
 
-        Parameters
-        ----------
-        label_word: list
-        label_under: Label
-        self.shift: int
+            :param  label_word - list
+            :param  label_under -  Label
+            :param  self.shift - int
 
-        description
-        -----------
-        draws word length underscores
+            :description:  draws word length underscores
 
-        Used libraries
-        --------------
-        from tkinter import *
-
+            :Used libraries: from tkinter import *
         """
 
         global  label_word, label_under
@@ -249,20 +225,14 @@ class AllInGra(DbRand):
 
     # выводит на экран сколько у нас осталось жизни
     def lifes(self):
-        """Function lifes
+        """
+            :lifes
 
-        Parameters
-        ----------
-        lifes: int
+            :param  lifes - int
 
-        description
-        -----------
-        displays the number of lives
+            :description: displays the number of lives
 
-        Used libraries
-        --------------
-        from tkinter import *
-
+            :Used libraries: from tkinter import *
         """
 
 
@@ -289,17 +259,14 @@ class AllInGra(DbRand):
 
 
     def timerStart(self):
-        """ Function timerStart
+        """
+            :timerStart
 
-        Parameters
-        ----------
-        self.czas: int
-        self.stopTimer: int
-        self.labelTime: Label
+            :param  self.czas: int
+            :param  self.stopTimer: int
+            :param  self.labelTime: Label
 
-        Used libraries
-        --------------
-        from tkinter import *
+            :Used libraries: from tkinter import *
         """
         self.czas -=1
 
@@ -319,34 +286,16 @@ class AllInGra(DbRand):
             self.okienko_gryAllIn.after_cancel(self.timerReload)
 
 
-
-
-    # def callBtn(self):
-    #     if self.czas == 0:
-    #         self.testbtnclick()
-    #     else:
-    #         pass
-
-
-
-
-    # костыли xd но работает , тут я сделал просто функцию
     def testbtnclick(self):
-        """ Function - testbtnclick
+        """
+            :testbtnclick
 
-        parameter
-        ---------
-        check: str
-        pos: list
-        licz_lifes: int
-        life: int
+            :param check: str
+            :param  pos: list
+            :param licz_lifes: int
+            :param life: int
 
-        description
-        -----------
-        checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
-
-
-
+            :description: checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
         """
 
 
@@ -387,23 +336,19 @@ class AllInGra(DbRand):
 
 
     def check_btn(self, event):
-        """Function - check_btn
+        """
+            :check_btn
+
+            :param  check : str
+            :param pos : list
+            :param licz_lifes:  int
+            :param life : int
+
+            :description: checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
 
 
-        parameter
-        ---------
-        check: str
-        pos: list
-        licz_lifes: int
-        life: int
-
-        description
-        -----------
-        checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
-
-
-        :param event:
-        :return:
+            :param event:
+            :return:
         """
 
         global  life
@@ -444,18 +389,14 @@ class AllInGra(DbRand):
 
 
     def gameOverr(self, status):
-        """ Function - game overr
+        """
+            :game overr
 
-        description
-        -----------
-        in case of victory and defeat, it displays the corresponding inscription on the screen,
-        also adds or subtracts points and calls the function for recording points in the table
+            :description: in case of victory and defeat, it displays the corresponding inscription on the screen, also adds or subtracts points and calls the function for recording points in the table
 
-        Used libraries
-        --------------
-        from tkinter import *
+            :Used libraries: from tkinter import *
 
-        :param status: str
+            :param status: str
         """
 
         global  punkty
@@ -492,22 +433,16 @@ class AllInGra(DbRand):
 
 
     def draw(self, life):
-        """ Function - draw
+        """
+            :draw
 
-        Parameters
-        -----------
-        life : int
+            :param life : int
 
-        description
-        -----------
-        checks the number of lives and draws lines according to their number
+            :description: checks the number of lives and draws lines according to their number
 
-        Used libraries
-        --------------
-        from tkinter import *
+            :Used libraries: from tkinter import *
 
         :param life: int
-        :return:
         """
 
 
@@ -538,12 +473,11 @@ class AllInGra(DbRand):
 
 
     def readtxt(self):
-        """ Function -  readtxt
+        """
+            :readtxt
 
-        Parameters
-        -----------
-        f: File
-        nick_is_points: str
+        :param f : File
+        :param nick_is_points: str
 
         description
         -----------

@@ -5,28 +5,24 @@ from rejestracja import  Rejestracja
 from logowanie import  Logowanie
 from tkinter import ttk
 
-
-
-
-
 class StartWindow():
     def __init__(self, width, height, title = "Wisielca", resizable = (False, False) ):
-        """ function -  __init__ class StartWindow
+        """
+            :__init__  class StartWindow
 
+            :description:
+            -----------
+            .lift()
+                gives an advantage in the location of windows
+            .iconbitmap
+                adds an icon to the application
+            .title()
+                sets the title of the window
 
-        description
-        -----------
-        .lift()
-            gives an advantage in the location of windows
-        .iconbitmap
-            adds an icon to the application
-        .title()
-            sets the title of the window
-
-        :param width: 512
-        :param height: 512
-        :param title: Wisielca
-        :param resizable: (False, False)
+            :param width: 512
+            :param height: 512
+            :param title: Wisielca
+            :param resizable: (False, False)
         """
 
         self.window1 = Tk()
@@ -46,27 +42,20 @@ class StartWindow():
 
 
     def btn(self):
-        """Function - btn
+        """
+            : btn
 
-        Parameters
-        ----------
-        self.btn_rejestracja : tkk.Button
-            register button (opens the registration window)
+            :param self.btn_rejestracja : tkk.Button - register button (opens the registration window)
 
-         self.btn_logowanie: tkk.Button
-            authorization button (opens authorization window)
+            :param self.btn_logowanie: tkk.Button: authorization button -  (opens authorization window)
 
-        self.btn_musicoff: PhotoImage
-            adds a photo to the button
-            Button - button with text "stop music ",  to stop music
+            :param self.btn_musicoff: PhotoImage - adds a photo to the button
+            :param Button:  button with text "stop music ",  to stop music
 
-        self.btn_music: PhotoImage
-            adds a photo to the button
-            button  self.volume_btn -  turns on music
+            :param self.btn_music: PhotoImage adds a photo to the button
+            :param button: self.volume_btn -  turns on music
 
-        Used libraries
-        --------------
-        tkinter import *
+            :Used libraries:  tkinter import *
         """
 
         self.btn_rejestracja = ttk.Button(self.window1, text="Registration", command=self.okno_rejestracjiself , width = 15).place(relx=0.45, rely=0.4)
@@ -110,44 +99,34 @@ class StartWindow():
         webbrowser.open_new(self.urlGitHub)
 
     def stop_sound(self):
-        """function - stop_sound
+        """
+            : stop_sound
 
-        Parameters
-        ----------
-        winsound.SND_ALIAS: sound parameter
-            The sound parameter is a sound association name from the registry.
-            If the registry contains no such name, play the system default sound.
+            :param:winsound.SND_ALIAS: sound parameter
+                The sound parameter is a sound association name from the registry.
+                If the registry contains no such name, play the system default sound.
 
-        Used libraries
-        --------------
-        winsound
-
-
-        :return
-            nothing
+            :Used libraries: winsound
         """
 
         winsound.PlaySound(None, winsound.SND_ALIAS)
 
     def play_music(self):
-        """function -  play_music
+        """
+            : play_music
 
-            Parameters
-            ---------
-            winsound.SND_ALIAS : sound parameter
+            :param: winsound.SND_ALIAS: sound parameter
                 The sound parameter is a sound association name from the registry.
                 If the registry contains no such name, play the system default sound.
 
-            winsound.SND_ASYNC : sound parameter
+            :param: winsound.SND_ASYNC : sound parameter
                 Return immediately, allowing sounds to play asynchronously.
-            winsound.SND_LOOP: sound parameter
+            :param: winsound.SND_LOOP: sound parameter
                 Play the sound repeatedly. The SND_ASYNC flag must also be used to avoid blocking
 
-            Used libraries
-            --------------
-            winsound
+            :Used libraries: winsound
 
-        :return: immediately
+            :return: immediately
 
         """
         winsound.PlaySound('filesImages/sound.wav', winsound.SND_ALIAS | winsound.SND_ASYNC| winsound.SND_LOOP )
@@ -156,61 +135,48 @@ class StartWindow():
 
 
     def run(self):
-        """ function  - run
+        """
+            : run
 
-            parameter
-            ---------
-             self.window1.mainloop()
+            :param: self.window1.mainloop()
                 that service function will loop the window indefinitely,
                 so the window will wait for any interaction with the user until it is closed
-        :return:
         """
         self.window1.mainloop()
 
 
     def okno_rejestracjiself(self,  width = 500, height=400, title = "Registration window" , resizable = (False, False)):
-        """ function -  okno_rejestracjiself
+        """
+            : okno_rejestracjiself
 
+            :description: opens the registration window
 
-            description
-            ----------
-            opens the registration window
-
-        :param width: 500
-        :param height: 400
-        :param title: Okno rejestracji
-        :param resizable: (False, False)
-        :return:
+            :param width: 500
+            :param height: 400
+            :param title: Okno rejestracji
+            :param resizable: (False, False)
+            :return:
         """
         Rejestracja(self.window1, width, height, title ,resizable )
 
     def okno_logowaniaself(self , width = 400, height=300, title = "Authorization window" , resizable = (False, False)):
-        """function okno_logowaniaself
+        """
+            :okno_logowaniaself
 
-            description
-            -----------
-            opens the authorization window
+            :description: opens the authorization window
 
-        :param width:
-        :param height:
-        :param title:
-        :param resizable:
-        :return:
+            :param width: 400
+            :param height: 500
+            :param title: Authorization window
+            :param resizable: False, False
         """
         Logowanie(self.window1, width, height, title ,resizable )
 
 
-
-
-
-
     def image(self):
-        """ function - image
-
-            description
-            -----------
-            adds a background image
-        :return:
+        """
+            :image
+            :description: adds a background image
         """
         filename =PhotoImage(file ="filesImages/fon.png")
         filename = filename.subsample(1,1)
