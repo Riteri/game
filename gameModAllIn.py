@@ -12,8 +12,6 @@ class AllInGra(DbRand):
 
     def __init__(self, parent, title="Game mod allin", resizable=(False, False) ):
         """
-            : __init__
-
             :description:
                 .lift()
                     gives an advantage in the location of windows
@@ -30,8 +28,6 @@ class AllInGra(DbRand):
                 import os
                 import psycopg2 as ps
 
-
-            :param parent:
             :param title: Game mod allin
             :param resizable: (False, False)
         """
@@ -60,10 +56,6 @@ class AllInGra(DbRand):
 
 
 
-
-
-
-
         self.topButton = ttk.Button(self.okienko_gryAllIn, text="\nnew word\n",  command = lambda :[ self.dbrand(), \
                                     self.delete_text(), self.randThems(),\
                                     self.start_pos_word(), self.lifes(), self.alphabet_start(), self.start_pos_man(),\
@@ -72,41 +64,24 @@ class AllInGra(DbRand):
 
 
     def disablebtn(self):
+        """
+            :description: disabled button
+
+        """
         self.topButton['state'] = 'disabled'
 
     def enabledBtn(self):
+        """
+            :description: enabled button, timer = 0 , delete label
+        """
         self.stopTimer =0
         self.deleteLabel()
         self.topButton['state'] = 'enabled'
 
 
 
-
-    def line(self):
-        """
-            :line
-
-            :param y: int
-            :param x: int
-
-            :description:
-                draws lines creating a notebook effect
-
-            :Used libraries: from tkinter import *
-        """
-        y = 0
-        while y < 680:
-            x = 0
-            while x < 900:
-                self.canvas.create_rectangle(x, y, x + 33, y + 27, fill="white", outline="blue")
-                x = x + 33
-            y = y + 27
-
-
     def start_pos_man(self):
         """
-            :start_pos_man
-
             :description: draws the gallows
 
             :Used libraries:  from tkinter import *
@@ -125,11 +100,10 @@ class AllInGra(DbRand):
 
     def alphabet_start(self):
         """
-            :alphabet_start
 
-            :param self.shift_x:int
+            :param self.shift_x: int
 
-            :param self.count:int
+            :param self.count: int
             :param buttons: list
 
             :description: places buttons with letters of the alphabet
@@ -173,8 +147,6 @@ class AllInGra(DbRand):
 
     def randThems(self):
         """
-            :randThems
-
             :description: displays the topic of the word
 
             :Used libraries: from tkinter import *
@@ -188,13 +160,11 @@ class AllInGra(DbRand):
 
     def start_pos_word(self):
         """
-            :start_pos_word
-
-            :param  label_word:list
+            :param  label_word: list
             :param  label_under:  Label
             :param  self.shift: int
 
-            :description:  draws word length underscores
+            :description: draws word length underscores
 
             :Used libraries: from tkinter import *
         """
@@ -214,8 +184,6 @@ class AllInGra(DbRand):
 
     def deleteLabel(self):
         """
-            :deleteLabel
-
             :description: delete label
 
         """
@@ -226,8 +194,6 @@ class AllInGra(DbRand):
     # выводит на экран сколько у нас осталось жизни
     def lifes(self):
         """
-            :lifes
-
             :param  lifes: int
 
             :description: displays the number of lives
@@ -251,10 +217,7 @@ class AllInGra(DbRand):
 
     def posTimer(self):
         """
-            :posTimer
-
             :description: add timer
-
 
         """
 
@@ -268,14 +231,13 @@ class AllInGra(DbRand):
 
     def timerStart(self):
         """
-            :timerStart
-
             :param  self.czas: int
             :param  self.stopTimer: int
             :param  self.labelTime: Label
 
             :Used libraries: from tkinter import *
         """
+
         self.czas -=1
 
         if self.czas !=0:
@@ -296,8 +258,6 @@ class AllInGra(DbRand):
 
     def testbtnclick(self):
         """
-            :testbtnclick
-
             :param check: str
             :param  pos: list
             :param licz_lifes: int
@@ -305,6 +265,7 @@ class AllInGra(DbRand):
 
             :description: checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
         """
+
 
 
         global  life
@@ -345,7 +306,6 @@ class AllInGra(DbRand):
 
     def check_btn(self, event):
         """
-            :check_btn
 
             :param  check : str
             :param pos : list
@@ -354,8 +314,6 @@ class AllInGra(DbRand):
 
             :description: checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
 
-
-            :param event:
         """
 
         global  life
@@ -397,13 +355,13 @@ class AllInGra(DbRand):
 
     def gameOverr(self, status):
         """
-            :game overr
-
+            :param status: str
+            :param punkty: int
             :description: in case of victory and defeat, it displays the corresponding inscription on the screen, also adds or subtracts points and calls the function for recording points in the table
 
             :Used libraries: from tkinter import *
 
-            :param status: str
+
         """
 
         global  punkty
@@ -438,7 +396,6 @@ class AllInGra(DbRand):
 
     def draw(self, life):
         """
-            :draw
 
             :param life: int
 
@@ -448,7 +405,6 @@ class AllInGra(DbRand):
 
             :param life: int
         """
-
 
 
         if life == 4:
@@ -478,9 +434,8 @@ class AllInGra(DbRand):
 
     def readtxt(self):
         """
-            :readtxt
 
-            :param f : File
+            :param f: File
             :param nick_is_points: str
 
             :description: reads txt file and gets values from there after reading it immediately deletes it
@@ -501,8 +456,6 @@ class AllInGra(DbRand):
     # тут обращаюсь к 2м базам и достаю из них данные, с базы points достаю ник и очки
     def dbpoints(self):
         """
-            :dbpoints
-
             :param points_for_nick: tuple
             :param points_new: tuple
 
@@ -510,6 +463,7 @@ class AllInGra(DbRand):
 
             :return: tuple
         """
+
 
         global  points_for_nick, points_new
 
@@ -536,10 +490,7 @@ class AllInGra(DbRand):
 
 
     def nickIPointsIavatar(self):
-
-
         """
-            :nickIPointsIavatar
 
             :param self.labelNickGame: Label
             :param self.labelPoints: label
@@ -548,7 +499,6 @@ class AllInGra(DbRand):
 
             :Used libraries: from tkinter import *
         """
-
 
 
         self.labelNickGame = Label(self.okienko_gryAllIn, text = 'nick: ' + nick_is_points, font = ('Futura PT Heave ',20 ) )
@@ -562,13 +512,12 @@ class AllInGra(DbRand):
 
     def newPunkty(self):
         """
-            :newPunkty
-
             :param points.execute: database
 
             :Description: uploads the received points to the database
 
             :Used libraries: import psycopg2 as ps
+
 
         """
         conn = ps.connect("host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
@@ -586,8 +535,6 @@ class AllInGra(DbRand):
 
     def delete_text(self):
         """
-            :delete_text
-
             :description: clears the field after the end of the game
 
             :Used libraries: from tkinter import *

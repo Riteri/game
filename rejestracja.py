@@ -13,8 +13,6 @@ from email.mime.multipart import MIMEMultipart
 class Rejestracja :
     def __init__(self, parent, width, height, title="Registration window", resizable=(False, False) ):
         """
-            :__init__
-
             :param self.okno_rejestracji: Toplevel tkinter
             :param self.okno_rejestracji.iconbitmap: tkinter
 
@@ -44,15 +42,13 @@ class Rejestracja :
 
     def rej(self):
         """
-            :rej
-
             :param self.nick: StringVar()
             :param self.adres_email: StringVar()
             :param self.plec: StringVar()
             :param self.haslo: StringVar()
             :param Label: tkinter.Label
 
-            :param self.hi_rej : Label
+            :param self.hi_rej: Label
                 label with text - (okno dla rejestracji, wpisz swoje danne)
 
             :param self.nick_rejestracja: ttk.Entry
@@ -73,16 +69,12 @@ class Rejestracja :
             :Used libraries:
                 tkinter import *
                 tkinter import ttk
-
-
         """
-
 
         self.nick = StringVar()
         self.adres_email = StringVar()
         self.plec = StringVar()
         self.haslo = StringVar()
-
 
 
 
@@ -117,8 +109,6 @@ class Rejestracja :
 
     def dodawanie_niku_do_bazy_points(self):
         """
-            :dodawanie_niku_do_bazy_points
-
             :param self.newNickPoints.execute: database
                 adding a nickname and points to the database points (initially 0 )
 
@@ -140,12 +130,10 @@ class Rejestracja :
     #Добавление аватарки
     def avatar(self):
         """
-            :avatar
-            :param self.avatar:askopenfilename
+            :param self.avatar: askopenfilename
                 opens a window and asks the user to select a file
 
-            :Used libraries:
-                from tkinter import filedialog
+            :Used libraries: from tkinter import filedialog
         """
         self.avatar = filedialog.askopenfilename(parent=self.okno_rejestracji)
 
@@ -154,8 +142,6 @@ class Rejestracja :
 
     def sprawdzanie_nicknamu(self):
         """
-            :sprawdzanie_nicknamu
-
             :param self.sprawdzanieNik: database
                 makes a query to the database and places the result in a variable self.niknameisbase
 
@@ -167,14 +153,10 @@ class Rejestracja :
             :description:
                 checking whether the nickname entered by the user exists in the database,
                 if it does not, it puts the entered data, and if it does, it throws an error
-
                 sends a message to the mail
-
-
 
             :Used libraries: import psycopg2 as ps
 
-            :return: messagebox, tuple
         """
 
 

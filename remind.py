@@ -11,8 +11,6 @@ class Remind:
     def __init__(self, parent, title="remindWindow", resizable=(False, False) ):
 
         """
-            :__init__
-
             :param title: remindWindow
             :param resizable: False, False
         """
@@ -31,8 +29,6 @@ class Remind:
 
     def entryLabels(self):
         """
-            :entryLabels
-
              :param self.nickStr: StringVar()
              :param self.emailStr: StringVar()
 
@@ -58,8 +54,6 @@ class Remind:
 
     def password_search(self):
         """
-            :password_search
-
             :description: sends an email with a password
         """
 

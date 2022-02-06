@@ -11,7 +11,6 @@ from remind import Remind
 class Logowanie(Gra, AllInGra):
     def __init__(self, parent, width, height, title="Authorization", resizable=(False, False) ):
         """
-            :__init__
 
             :param self.okno_logowania.iconbitmap: tkinter adds an icon to the application
 
@@ -24,9 +23,6 @@ class Logowanie(Gra, AllInGra):
                 .title()
                     sets the title of the window
 
-
-
-            :param parent:
             :param width: 400
             :param height: 300
             :param title: Logowanie
@@ -44,13 +40,8 @@ class Logowanie(Gra, AllInGra):
 
 
 
-
-
-
     def loguj(self):
         """
-            :loguj
-
             :param self.haslo_logowanie_bd: StringVar()
             :param nickname_logowanie_bd: StringVar()
 
@@ -70,8 +61,6 @@ class Logowanie(Gra, AllInGra):
 
         self.haslo_logowanie_bd = StringVar()
         nickname_logowanie_bd = StringVar()
-
-
 
 
 
@@ -102,8 +91,6 @@ class Logowanie(Gra, AllInGra):
 
     def points(self):
         """
-            :points
-
             :param f: File
 
             :description:
@@ -122,8 +109,6 @@ class Logowanie(Gra, AllInGra):
 
     def sprawdz_i_graj(self):
         """
-            :sprawdz_i_graj
-
             :param self.imie.execute: database
             :param self.niknamelogowaniedb: tuple
 
@@ -172,8 +157,6 @@ class Logowanie(Gra, AllInGra):
 
     def userGame(self):
         """
-            :userGame
-
             :param self.imie.execute: database
             :param self.niknamelogowaniedb: tuple
 

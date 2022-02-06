@@ -14,10 +14,8 @@ class DbRand :
     #не работает
     def json(self):
         """
-            :json
-
-            :param:file -  File.json
-            :param: key - key
+            :param file:   File.json
+            :param key: - key
 
             :Description: writing words and topics in encrypted form to json file
 
@@ -32,8 +30,6 @@ class DbRand :
         key = file.read()
         file.close()
 
-        # fernet = Fernet(key)  # это мы передаем ключ в переменную
-        # encrypted = fernet.encrypt(codind_slowa)
 
         fernet = Fernet(key)  # это мы передаем ключ в переменную
         decrypted_text = fernet.decrypt(
@@ -67,11 +63,9 @@ class DbRand :
 
     def dbrand(self):
         """
-            :dbrand
-
-            :param: self.random_thems - list
-            :param: self.randomslowa - tuple
-            :param: self.slowa_json -  json
+            :param self.random_thems:  list
+            :param self.randomslowa:  tuple
+            :param self.slowa_json:   json
 
             :Description: through random, a random topic is selected from the list, then the type is changed to string and a query is sent to the table
                             after, from the list, a random word is randomly selected, which the user will guess.

@@ -8,23 +8,19 @@ from tkinter import ttk
 class StartWindow():
     def __init__(self, width, height, title = "Wisielca", resizable = (False, False) ):
         """
-            :__init__  class StartWindow
-
             :description:
-            -----------
-            .lift()
-                gives an advantage in the location of windows
-            .iconbitmap
-                adds an icon to the application
-            .title()
-                sets the title of the window
+                .lift()
+                    gives an advantage in the location of windows
+                .iconbitmap
+                    adds an icon to the application
+                .title()
+                    sets the title of the window
 
             :param width: 512
             :param height: 512
             :param title: Wisielca
             :param resizable: (False, False)
         """
-
         self.window1 = Tk()
         self.window1.title(title)
         self.window1.geometry(f"{width}x{height}+500+150") # отступ от краев экрана + размеры
@@ -33,7 +29,6 @@ class StartWindow():
         # self.window1.lift()
         self.image()
         self.btn()
-
         self.urlDonation = 'https://www.donationalerts.com/r/antondiditsky'
         self.urlTikTok = 'https://www.tiktok.com/@riteri'
         self.urlGitHub = 'https://github.com/Riteri'
@@ -43,15 +38,10 @@ class StartWindow():
 
     def btn(self):
         """
-            : btn
-
-            :param self.btn_rejestracja : tkk.Button - register button (opens the registration window)
-
+            :param self.btn_rejestracja: tkk.Button - register button (opens the registration window)
             :param self.btn_logowanie: tkk.Button: authorization button -  (opens authorization window)
-
             :param self.btn_musicoff: PhotoImage - adds a photo to the button
             :param Button:  button with text "stop music ",  to stop music
-
             :param self.btn_music: PhotoImage adds a photo to the button
             :param button: self.volume_btn -  turns on music
 
@@ -90,19 +80,29 @@ class StartWindow():
 
 
     def donation(self):
+        """
+            :description: open Donation
+
+        """
         webbrowser.open_new(self.urlDonation)
 
     def tokTok(self):
+        """
+            :description: open TikTok
+
+        """
         webbrowser.open_new(self.urlTikTok)
 
     def github(self):
+        """
+            :description: open Github
+
+        """
         webbrowser.open_new(self.urlGitHub)
 
     def stop_sound(self):
         """
-            : stop_sound
-
-            :param:winsound.SND_ALIAS: sound parameter
+            :param winsound.SND_ALIAS: sound parameter
                 The sound parameter is a sound association name from the registry.
                 If the registry contains no such name, play the system default sound.
 
@@ -113,20 +113,17 @@ class StartWindow():
 
     def play_music(self):
         """
-            : play_music
-
-            :param: winsound.SND_ALIAS: sound parameter
+            :param winsound.SND_ALIAS: sound parameter
                 The sound parameter is a sound association name from the registry.
                 If the registry contains no such name, play the system default sound.
 
-            :param: winsound.SND_ASYNC : sound parameter
+            :param winsound.SND_ASYNC: sound parameter
                 Return immediately, allowing sounds to play asynchronously.
-            :param: winsound.SND_LOOP: sound parameter
+            :param winsound.SND_LOOP: sound parameter
                 Play the sound repeatedly. The SND_ASYNC flag must also be used to avoid blocking
 
             :Used libraries: winsound
 
-            :return: immediately
 
         """
         winsound.PlaySound('filesImages/sound.wav', winsound.SND_ALIAS | winsound.SND_ASYNC| winsound.SND_LOOP )
@@ -136,35 +133,24 @@ class StartWindow():
 
     def run(self):
         """
-            : run
-
-            :param: self.window1.mainloop()
-                that service function will loop the window indefinitely,
-                so the window will wait for any interaction with the user until it is closed
+            :param self.window1.mainloop(): that service function will loop the window indefinitely, so the window will wait for any interaction with the user until it is closed
         """
         self.window1.mainloop()
 
 
     def okno_rejestracjiself(self,  width = 500, height=400, title = "Registration window" , resizable = (False, False)):
         """
-            : okno_rejestracjiself
-
             :description: opens the registration window
-
             :param width: 500
             :param height: 400
             :param title: Okno rejestracji
             :param resizable: (False, False)
-            :return:
         """
         Rejestracja(self.window1, width, height, title ,resizable )
 
     def okno_logowaniaself(self , width = 400, height=300, title = "Authorization window" , resizable = (False, False)):
         """
-            :okno_logowaniaself
-
             :description: opens the authorization window
-
             :param width: 400
             :param height: 500
             :param title: Authorization window
@@ -175,7 +161,6 @@ class StartWindow():
 
     def image(self):
         """
-            :image
             :description: adds a background image
         """
         filename =PhotoImage(file ="filesImages/fon.png")
@@ -184,9 +169,6 @@ class StartWindow():
         filename_label.image = filename
         filename_label['image'] = filename_label.image
         filename_label.place(x=0,y=0)
-
-
-
 
 if __name__ == "__main__":
     startWindow= StartWindow(512,512)

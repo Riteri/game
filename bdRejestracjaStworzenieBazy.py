@@ -2,6 +2,11 @@ import psycopg2 as ps
 
 class DbRejestracja:
     def db_rejestracja(self):
+        """
+            :description: create player database
+
+        """
+
         self.conn = ps.connect("host = 212.182.24.105 port=15432 dbname = student28 user = student28 password = anton123")
         self.cur =self.conn.cursor()
 
