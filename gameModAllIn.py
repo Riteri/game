@@ -306,11 +306,10 @@ class AllInGra(DbRand):
 
     def check_btn(self, event):
         """
-
-            :param  check : str
-            :param pos : list
+            :param  check: str
+            :param pos: list
             :param licz_lifes:  int
-            :param life : int
+            :param life: int
 
             :description: checks if the user guessed the letter, if not, one life is taken away and the function of drawing human parts is called
 
