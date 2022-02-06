@@ -8,7 +8,6 @@ from gra import  Gra
 from remind import Remind
 
 
-
 class Logowanie(Gra, AllInGra):
     def __init__(self, parent, width, height, title="Authorization", resizable=(False, False) ):
         """
@@ -114,7 +113,7 @@ class Logowanie(Gra, AllInGra):
 
 
 
-        #открываем файл и записываем туда ник и очки
+
         f = open('points.txt', 'w')
         f.write(str( nickname_logowanie_bd.get()))
         f.close()
