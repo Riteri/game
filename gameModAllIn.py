@@ -255,6 +255,12 @@ class AllInGra(DbRand):
         if self.stopTimer == 0:
             self.okienko_gryAllIn.after_cancel(self.timerReload)
 
+        if self.czas == 10:
+            self.labelTime.destroy()
+            self.czas = 10
+            self.labelTime = Label(self.okienko_gryAllIn, text='Time before line drawing: {}'.format(self.czas),
+                                   font=('Futura PT Heave ', 12), fg='purple')
+            self.labelTime.place(relx=0.68, rely=0.55)
 
     def testbtnclick(self):
         """

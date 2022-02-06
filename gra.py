@@ -240,6 +240,7 @@ class Gra(DbRand):
 
         self.czas -=1
 
+
         if self.czas !=0:
 
             self.labelTime.config(text = 'Time before line drawing: {}'.format(self.czas))
@@ -254,6 +255,15 @@ class Gra(DbRand):
 
         if self.stopTimer == 0:
             self.okienko_gry.after_cancel(self.timerReload)
+
+        if self.czas == 10:
+            self.labelTime.destroy()
+            self.czas = 10
+            self.labelTime = Label(self.okienko_gry, text='Time before line drawing: {}'.format(self.czas),
+                                   font=('Futura PT Heave ', 12), fg='purple')
+            self.labelTime.place(relx=0.68, rely=0.55)
+
+
 
 
 

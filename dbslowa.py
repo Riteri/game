@@ -11,7 +11,7 @@ class DbRand :
 
 
 
-    #не работает
+    #nie wystarczylo czasu
     def json(self):
         """
             :param file:   File.json
